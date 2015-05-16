@@ -30,8 +30,9 @@ public class Response implements AvrResponse {
 	 *
 	 */
 	public enum ResponseType implements AvrResponse.RepsonseType {
-		POWER_STATE("PWR", "[0-2]"), VOLUME_LEVEL("VOL", "[0-9]{3}"), MUTE_STATE("MUT", "[0-1]"), INPUT_SOURCE_CHANNEL(
-				"FN", "[0-9]{2}"), DISPLAY_INFORMATION("FL", "[0-9a-fA-F]{30}");
+		POWER_STATE("PWR", "[0-2]"), VOLUME_LEVEL("VOL", "[0-9]{3}"), MUTE_STATE("MUT", "[0-1]"), INPUT_SOURCE_CHANNEL("FN", "[0-9]{2}"), DISPLAY_INFORMATION(
+				"FL", "[0-9a-fA-F]{30}"), INPUT_NAME("RGB", "[0-9]{2}[0-1].{0,14}"), ACK("R", ""), NOT_AVAILABLE_NOW("E02", "", true), INVALID_COMMAND("E03", "", true), COMMAND_ERROR(
+				"E04", "", true), PARAMETER_ERROR("E06", "", true), SYSTEM_BUSY("B00", "", true);
 
 		private String responsePrefix;
 
@@ -39,15 +40,18 @@ public class Response implements AvrResponse {
 
 		private Pattern matchPattern;
 
-		private ResponseType(String responsePrefix,
-				String parameterPattern) {
+		private boolean isError;
+
+		private ResponseType(String responsePrefix, String parameterPattern, boolean isError) {
 			this.responsePrefix = responsePrefix;
 			this.parameterPattern = parameterPattern;
-			this.matchPattern = Pattern
-					.compile(responsePrefix
-							+ "("
-							+ (StringUtils.isNotEmpty(parameterPattern) ? parameterPattern
-									: "") + ")");
+			this.matchPattern = Pattern.compile(responsePrefix + "(" + (StringUtils.isNotEmpty(parameterPattern) ? parameterPattern : "")
+					+ ")");
+			this.isError = isError;
+		}
+
+		private ResponseType(String responsePrefix, String parameterPattern) {
+			this(responsePrefix, parameterPattern, false);
 		}
 
 		public String getResponsePrefix() {
@@ -83,6 +87,11 @@ public class Response implements AvrResponse {
 			matcher.find();
 			return matcher.group(1);
 		}
+
+		@Override
+		public boolean isError() {
+			return isError;
+		}
 	}
 
 	private ResponseType responseType;
@@ -91,16 +100,13 @@ public class Response implements AvrResponse {
 
 	public Response(String responseData) throws AvrConnectionException {
 		if (StringUtils.isEmpty(responseData)) {
-			throw new AvrConnectionException(
-					"responseData is empty. Cannot parse the response.");
+			throw new AvrConnectionException("responseData is empty. Cannot parse the response.");
 		}
 
 		this.responseType = parseResponseType(responseData);
 
 		if (this.responseType == null) {
-			throw new AvrConnectionException(
-					"Cannot find the responseType of the responseData "
-							+ responseData);
+			throw new AvrConnectionException("Cannot find the responseType of the responseData " + responseData);
 		}
 
 		if (this.responseType.hasParameter()) {
@@ -109,16 +115,14 @@ public class Response implements AvrResponse {
 	}
 
 	/**
-	 * Return the responseType corresponding to the given responseData. Return
-	 * null if no ResponseType can be matched.
+	 * Return the responseType corresponding to the given responseData. Return null if no ResponseType can be matched.
 	 * 
 	 * @param responseData
 	 * @return
 	 */
 	private ResponseType parseResponseType(String responseData) {
 		ResponseType result = null;
-		for (ResponseType responseType : ResponseType
-				.values()) {
+		for (ResponseType responseType : ResponseType.values()) {
 			if (responseType.match(responseData)) {
 				result = responseType;
 			}

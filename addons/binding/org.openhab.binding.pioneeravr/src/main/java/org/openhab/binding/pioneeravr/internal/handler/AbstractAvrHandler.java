@@ -8,6 +8,9 @@
  */
 package org.openhab.binding.pioneeravr.internal.handler;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -39,6 +42,8 @@ import org.openhab.binding.pioneeravr.protocol.utils.VolumeConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Maps;
+
 /**
  * The {@link AbstractAvrHandler} is responsible for handling commands, which are sent to one of the channels through an
  * AVR connection.
@@ -52,12 +57,19 @@ public abstract class AbstractAvrHandler extends BaseThingHandler implements Avr
 	private AvrConnection connection;
 	private ScheduledFuture<?> statusCheckerFuture;
 
+	private Map<String, String> inputNamesById;
+	private boolean inputAutoDiscoveryEnabled;
+
 	public AbstractAvrHandler(Thing thing) {
 		super(thing);
 		this.connection = createConnection();
 
 		this.connection.addUpdateListener(this);
 		this.connection.addDisconnectionListener(this);
+
+		this.inputNamesById = new HashMap<>();
+		// TODO enable when ready.
+		this.inputAutoDiscoveryEnabled = false;
 	}
 
 	/**
@@ -142,9 +154,41 @@ public abstract class AbstractAvrHandler extends BaseThingHandler implements Avr
 		// AVR has failed. So update its status to OFFLINE.
 		if (!connection.sendPowerQuery()) {
 			updateStatus(ThingStatus.OFFLINE);
+			
+			inputNamesById.clear();
 		} else {
-			// IF the power query has succeeded, the AVR status is ONLINE.
+			// If the power query has succeeded, the AVR status is ONLINE.
 			updateStatus(ThingStatus.ONLINE);
+			
+			// Discover the input sources if enabled
+			discoverInputSources();
+		}
+	}
+
+	/**
+	 * Get all the input names from the AVR
+	 */
+	private void discoverInputSources() {
+		// Only request the input source names if not already done.
+		if (inputNamesById.isEmpty()) {
+			// If the input source auto-discovery is enabled, request the AVR
+			if (inputAutoDiscoveryEnabled) {
+				try {
+					inputNamesById.clear();
+					for (int i = 1; i <= 99; i++) {
+						Thread.sleep(100);
+						connection.sendInputNameCommand(new DecimalType(i));
+					}
+				} catch (CommandTypeNotSupportedException e) {
+					// Nothing to do, should never happen.
+					logger.debug("Failed to send an InputNameCommand. It is surely a BUUUGGGGG !", e);
+				} catch (InterruptedException e) {
+					// Nothing to do. We do not care.
+				}
+			} else {
+				// Else use the default input sources.
+				inputNamesById = Maps.newHashMap(PioneerAvrBindingConstants.DEFAULT_INPUT_NAMES);
+			}
 		}
 	}
 
@@ -188,30 +232,44 @@ public abstract class AbstractAvrHandler extends BaseThingHandler implements Avr
 		try {
 			AvrResponse response = RequestResponseFactory.getIpControlResponse(event.getData());
 
-			switch (response.getResponseType()) {
-			case POWER_STATE:
-				managePowerStateUpdate(response);
-				break;
+			if (response.getResponseType().isError()) {
+				logger.debug("Received error from AVR @{}. Error: {}", event.getConnection().getConnectionName(), response.getResponseType()
+						.name());
+			} else {
 
-			case VOLUME_LEVEL:
-				manageVolumeLevelUpdate(response);
-				break;
+				switch (response.getResponseType()) {
+				case POWER_STATE:
+					managePowerStateUpdate(response);
+					break;
 
-			case MUTE_STATE:
-				manageMuteStateUpdate(response);
-				break;
+				case VOLUME_LEVEL:
+					manageVolumeLevelUpdate(response);
+					break;
 
-			case INPUT_SOURCE_CHANNEL:
-				manageInputSourceChannelUpdate(response);
-				break;
+				case MUTE_STATE:
+					manageMuteStateUpdate(response);
+					break;
 
-			case DISPLAY_INFORMATION:
-				manageDisplayedInformationUpdate(response);
-				break;
+				case INPUT_SOURCE_CHANNEL:
+					manageInputSourceChannelUpdate(response);
+					break;
 
-			default:
-				logger.debug("Unkown response type from AVR @{}. Response discarded: {}", event.getData(), event.getConnection());
+				case DISPLAY_INFORMATION:
+					manageDisplayedInformationUpdate(response);
+					break;
 
+				case INPUT_NAME:
+					manageInputNameUpdate(response);
+					break;
+
+				case ACK:
+					// Nothing to do
+					break;
+
+				default:
+					logger.debug("Unkown response type from AVR @{}. Response discarded: {}", event.getData(), event.getConnection());
+
+				}
 			}
 		} catch (AvrConnectionException e) {
 			logger.debug("Unkown response type from AVR @{}. Response discarded: {}", event.getData(), event.getConnection());
@@ -290,6 +348,25 @@ public abstract class AbstractAvrHandler extends BaseThingHandler implements Avr
 	private void manageDisplayedInformationUpdate(AvrResponse response) {
 		updateState(PioneerAvrBindingConstants.DISPLAY_INFORMATION_CHANNEL,
 				new StringType(DisplayInformationConverter.convertMessageFromIpControl(response.getParameterValue())));
+	}
+
+	/**
+	 * Update the input name of an input source channel.
+	 * 
+	 * @param response
+	 */
+	private void manageInputNameUpdate(AvrResponse response) {
+		String inputId = response.getParameterValue().substring(0, 2);
+		boolean isDefaultName = response.getParameterValue().charAt(2) == '0';
+		String inputName = "";
+		if (response.getParameterValue().length() > 3) {
+			inputName = response.getParameterValue().substring(3, response.getParameterValue().length());
+		}
+
+		inputNamesById.put(inputId, inputName);
+
+		logger.debug("Input name received from AVR @{}: inputId: {}, inputName: {}, isDefault: {}", connection.getConnectionName(),
+				inputId, inputName, isDefaultName);
 	}
 
 }

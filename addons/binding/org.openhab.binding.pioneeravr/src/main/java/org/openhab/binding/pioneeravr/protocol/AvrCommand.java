@@ -16,6 +16,8 @@ package org.openhab.binding.pioneeravr.protocol;
  */
 public interface AvrCommand {
 	
+	public static final String COMMAND_END_FLAG = "\r";
+	
 	/**
 	 * Represent a CommandType of command requests
 	 * 

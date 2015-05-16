@@ -53,7 +53,7 @@ public class SimpleCommand implements AvrCommand {
 
 	@Override
 	public String getCommand() {
-		return commandType.getCommand() + "\r";
+		return commandType.getCommand() + COMMAND_END_FLAG;
 	}
 
 	@Override

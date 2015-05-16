@@ -8,10 +8,13 @@
  */
 package org.openhab.binding.pioneeravr;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
 /**
@@ -53,5 +56,7 @@ public class PioneerAvrBindingConstants {
 
 	public final static Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = ImmutableSet.of(IP_AVR_THING_TYPE, IP_AVR_UNSUPPORTED_THING_TYPE);
 
+	// Default input names and Ids
+	public final static Map<String, String> DEFAULT_INPUT_NAMES = ImmutableMap.<String, String> builder().put("00","PHONO").put("01","CD").put("02","TUNER").put("03","CD-R/TAPE").put("04","DVD").put("05","TV").put("06","SAT/CBL").put("10","VIDEO 1 (VIDEO)").put("12","MULTI CH IN").put("13","USB-DAC").put("14","VIDEO 2").put("15","DVR/BDR").put("17","iPod/USB").put("19","HDMI 1").put("20","HDMI 2").put("21","HDMI 3").put("22","HDMI 4").put("23","HDMI 5").put("24","HDMI 6").put("25","BD").put("26","NETWORK").put("27","SIRIUS").put("31","HDMI (cyclic)").put("33","ADAPTER PORT").put("34","HDMI 7").put("35","HDMI 8").put("38","INTERNET RADIO").put("40","SiriusXM").put("41","PANDORA").put("44","MEDIA SERVER").put("45","FAVORITES").put("46","AirPlay").put("47","DMR").put("48","MHL").build();
 
 }

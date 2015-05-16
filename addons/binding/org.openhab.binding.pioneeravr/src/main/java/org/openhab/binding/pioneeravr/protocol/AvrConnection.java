@@ -85,6 +85,7 @@ public interface AvrConnection {
 	 * 
 	 * @param command
 	 * @return
+	 * @throws CommandTypeNotSupportedException
 	 */
 	public boolean sendPowerCommand(Command command) throws CommandTypeNotSupportedException;
 
@@ -93,6 +94,7 @@ public interface AvrConnection {
 	 * 
 	 * @param command
 	 * @return
+	 * @throws CommandTypeNotSupportedException
 	 */
 	public boolean sendVolumeCommand(Command command) throws CommandTypeNotSupportedException;
 
@@ -101,6 +103,7 @@ public interface AvrConnection {
 	 * 
 	 * @param command
 	 * @return
+	 * @throws CommandTypeNotSupportedException
 	 */
 	public boolean sendInputSourceCommand(Command command) throws CommandTypeNotSupportedException;
 
@@ -109,14 +112,26 @@ public interface AvrConnection {
 	 * 
 	 * @param command
 	 * @return
+	 * @throws CommandTypeNotSupportedException
 	 */
 	public boolean sendMuteCommand(Command command) throws CommandTypeNotSupportedException;
 
+	/**
+	 * Send a command to the AVR to request the name of the input with the given number.
+	 * 
+	 * @param command
+	 * @return
+	 * @throws CommandTypeNotSupportedException thrown if the command is not of type DecimalType
+	 */
+	boolean sendInputNameCommand(Command command) throws CommandTypeNotSupportedException;
+	
 	/**
 	 * Return the connection name
 	 * 
 	 * @return
 	 */
 	public String getConnectionName();
+
+
 
 }

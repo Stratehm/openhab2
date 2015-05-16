@@ -59,6 +59,13 @@ public interface AvrResponse {
 		 * @return
 		 */
 		public String parseParameter(String responseData);
+		
+		/**
+		 * Return true if the response type is an error type.
+		 * 
+		 * @return
+		 */
+		public boolean isError();
 	}
 	
 	/**

@@ -28,7 +28,7 @@ public class ParameterizedCommand extends SimpleCommand {
 	 */
 	public enum ParameterizedCommandType implements AvrCommand.CommandType {
 
-		VOLUME_SET("VL", "[0-9]{3}"), INPUT_CHANNEL_SET("FN", "[0-9]{2}");
+		VOLUME_SET("VL", "[0-9]{3}"), INPUT_CHANNEL_SET("FN", "[0-9]{2}"), INPUT_NAME_GET("?RGB", "[0-9]{2}");
 
 		private String command;
 		private String parameterPattern;
@@ -73,7 +73,17 @@ public class ParameterizedCommand extends SimpleCommand {
 					+ " does not match the pattern " + parameterPattern);
 		}
 
-		return parameter + super.getCommand();
+		String finalCommand = super.getCommandType().getCommand();
+		
+		// If the command start with ?, the parameter has to be appended
+		if(super.getCommand().startsWith("?")) {
+			finalCommand += parameter;
+		} else {
+			// Else the parameter is prepended
+			finalCommand = parameter + finalCommand;
+		}
+		
+		return finalCommand + COMMAND_END_FLAG;
 	}
 
 	public ParameterizedCommand setParameter(String parameter) {

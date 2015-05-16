@@ -263,6 +263,19 @@ public abstract class StreamAvrConnection implements AvrConnection {
 
 		return sendCommand(commandToSend);
 	}
+	
+	@Override
+	public boolean sendInputNameCommand(Command command) throws CommandTypeNotSupportedException {
+		AvrCommand commandToSend = null;
+
+		if (command instanceof DecimalType) {
+			commandToSend = RequestResponseFactory.getIpControlCommand(ParameterizedCommandType.INPUT_NAME_GET).setParameter(command.format("%02d"));
+		} else {
+			throw new CommandTypeNotSupportedException("Command type not supported.");
+		}
+
+		return sendCommand(commandToSend);	
+	}
 
 	@Override
 	public boolean sendMuteCommand(Command command) throws CommandTypeNotSupportedException {

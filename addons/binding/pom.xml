@@ -47,6 +47,10 @@
     <module>org.openhab.binding.yamahareceiver</module>
     <module>org.openhab.binding.zwave</module>
     <module>org.openhab.binding.zwave.test</module>
+    <module>org.openhab.binding.domodulebootloader</module>
+    <module>org.openhab.binding.domodule</module>
+    <module>org.openhab.binding.domoduledatagram</module>
+    <module>org.openhab.binding.domoduleiboard</module>
   </modules>
 
 </project>

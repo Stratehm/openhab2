@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="domoduleiboard"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+        xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+
+    <!-- Sample Thing Type -->
+    <thing-type id="IBoardUDP">
+        <label>IBoardUDP</label>
+        <description>A Domodule based on an IBoard and communicating through UDP.</description>
+
+        <channels>
+            <channel id="rollershutter" typeId="rollershutter"/>
+            <channel id="temperature" typeId="temperature"/>
+            <channel id="humidity" typeId="humidity"/>
+        </channels>
+    </thing-type>
+
+    <channel-type id="rollershutter">
+        <item-type>Rollershutter</item-type>
+        <label>Rollershutter</label>
+        <description>Open/Close a rollershutter.</description>
+        <category>Blinds</category>
+    </channel-type>
+
+    <channel-type id="temperature">
+        <item-type>Number</item-type>
+        <label>Temperature</label>
+        <description>The temperature.</description>
+        <category>Temperature</category>
+        <state readOnly="true" />
+    </channel-type>
+    
+    <channel-type id="humidity">
+        <item-type>Number</item-type>
+        <label>Humidity</label>
+        <description>The humidity.</description>
+        <category>Humidity</category>
+        <state readOnly="true" />
+    </channel-type>
+
+</thing:thing-descriptions>

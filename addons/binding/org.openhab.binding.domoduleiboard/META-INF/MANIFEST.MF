@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: DomoduleIBoard Binding
-Bundle-SymbolicName: org.openhab.binding.domoduleiboard;singleton:=true
+Bundle-SymbolicName: org.openhab.binding.domoduleiboard
 Bundle-Vendor: openHAB
 Bundle-Version: 2.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
@@ -10,17 +10,6 @@ Bundle-ClassPath: .,
  lib/commons-collections4-4.1.jar,
  lib/commons-lang3-3.4.jar
 Import-Package: 
- net.engio.mbassy.bus,
- net.engio.mbassy.bus.common,
- net.engio.mbassy.bus.config,
- net.engio.mbassy.bus.error,
- net.engio.mbassy.bus.publication,
- net.engio.mbassy.common,
- net.engio.mbassy.dispatch,
- net.engio.mbassy.dispatch.el,
- net.engio.mbassy.listener,
- net.engio.mbassy.subscription,
- org.apache.commons.codec,
  org.eclipse.smarthome.config.core,
  org.eclipse.smarthome.config.discovery,
  org.eclipse.smarthome.core.common,
@@ -30,26 +19,12 @@ Import-Package:
  org.eclipse.smarthome.core.thing.binding.builder,
  org.eclipse.smarthome.core.thing.type,
  org.eclipse.smarthome.core.types,
- org.openhab.binding.domodule,
- org.openhab.binding.domodule.api,
- org.openhab.binding.domodule.handler,
- org.openhab.binding.domoduledatagram,
  org.openhab.binding.domoduleiboard,
  org.openhab.binding.domoduleiboard.handler,
  org.slf4j,
- strat.domo.domodule.api.bearer,
  strat.domo.domodule.api.domodule,
- strat.domo.domodule.api.exception,
- strat.domo.domodule.api.factory,
- strat.domo.domodule.api.impl.event,
- strat.domo.domodule.api.impl.protocol.command,
- strat.domo.domodule.api.impl.protocol.command.definition,
- strat.domo.domodule.api.manager,
- strat.domo.domodule.api.message,
- strat.domo.domodule.api.protocol,
- strat.domo.domodule.api.protocol.command,
- strat.domo.domodule.api.protocol.command.definition,
  strat.domo.domodule.bearer.datagram
 Service-Component: OSGI-INF/*.xml
 Export-Package: org.openhab.binding.domoduleiboard,
  org.openhab.binding.domoduleiboard.handler
+Fragment-Host: org.openhab.binding.domodule

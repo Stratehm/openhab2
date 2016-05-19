@@ -13,7 +13,7 @@
    <implementation class="org.openhab.binding.domoduleiboard.internal.DomoduleIBoardHandlerFactory"/>
 
    <service>
-      <provide interface="org.eclipse.smarthome.core.thing.binding.ThingHandlerFactory"/>
+      <provide interface="org.openhab.binding.domodule.api.DomoduleHandlerFactory"/>
    </service>
 
 </scr:component>

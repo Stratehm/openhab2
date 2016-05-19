@@ -14,9 +14,11 @@ import java.util.Set;
 
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
-import org.eclipse.smarthome.core.thing.binding.BaseThingHandlerFactory;
 import org.eclipse.smarthome.core.thing.binding.ThingHandler;
+import org.openhab.binding.domodule.api.DomoduleHandlerFactory;
 import org.openhab.binding.domoduleiboard.handler.DomoduleIBoardHandler;
+
+import strat.domo.domodule.api.manager.DomoduleManager;
 
 /**
  * The {@link DomoduleIBoardHandlerFactory} is responsible for creating things and thing
@@ -24,22 +26,21 @@ import org.openhab.binding.domoduleiboard.handler.DomoduleIBoardHandler;
  *
  * @author Antoine Besnard - Initial contribution
  */
-public class DomoduleIBoardHandlerFactory extends BaseThingHandlerFactory {
+public class DomoduleIBoardHandlerFactory implements DomoduleHandlerFactory {
 
     private final static Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Collections.singleton(THING_TYPE_IBOARD_UDP);
 
     @Override
-    public boolean supportsThingType(ThingTypeUID thingTypeUID) {
-        return SUPPORTED_THING_TYPES_UIDS.contains(thingTypeUID);
+    public Set<ThingTypeUID> getSupportedThings() {
+        return SUPPORTED_THING_TYPES_UIDS;
     }
 
     @Override
-    protected ThingHandler createHandler(Thing thing) {
-
+    public ThingHandler createHandler(Thing thing, DomoduleManager domoduleManager) {
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
         if (thingTypeUID.equals(THING_TYPE_IBOARD_UDP)) {
-            return new DomoduleIBoardHandler(thing);
+            return new DomoduleIBoardHandler(thing, domoduleManager);
         }
 
         return null;

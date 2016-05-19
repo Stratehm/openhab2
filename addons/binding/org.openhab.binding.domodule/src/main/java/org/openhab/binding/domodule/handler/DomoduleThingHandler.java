@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import strat.domo.domodule.api.domodule.Domodule;
+import strat.domo.domodule.api.manager.DomoduleManager;
 
 /**
  * The {@link DomoduleThingHandler} is responsible for handling commands, which are
@@ -36,18 +37,14 @@ public abstract class DomoduleThingHandler<T extends Domodule> extends BaseThing
 
     private Logger logger = LoggerFactory.getLogger(DomoduleThingHandler.class);
 
+    private DomoduleManager domoduleManager;
+
     private T domodule;
 
-    @SuppressWarnings("unchecked")
-    public DomoduleThingHandler(Thing thing) {
+    public DomoduleThingHandler(Thing thing, DomoduleManager domoduleManager) {
         super(thing);
-        Object domodule = thing.getConfiguration().get(DomoduleBindingConstants.PROPERTY_DOMODULE);
-
-        if (domodule != null) {
-            // No ClassCastException should be thrown.
-            // If so, it is a bug since the *HandlerFactory has not built the right ThingHandler for the domodule.
-            this.domodule = (T) thing.getConfiguration().get(DomoduleBindingConstants.PROPERTY_DOMODULE);
-        }
+        this.domoduleManager = domoduleManager;
+        retrieveDomodule();
     }
 
     @Override
@@ -60,13 +57,12 @@ public abstract class DomoduleThingHandler<T extends Domodule> extends BaseThing
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void thingDiscovered(DiscoveryService source, DiscoveryResult result) {
         if (result.getThingUID().equals(this.getThing().getUID())) {
             // No ClassCastException should be thrown.
             // If so, it is a bug since the *HandlerFactory has not built the right ThingHandler for the domodule.
-            this.domodule = (T) result.getProperties().get(DomoduleBindingConstants.PROPERTY_DOMODULE);
+            retrieveDomodule();
             updateStatus(ThingStatus.ONLINE);
         }
     }
@@ -104,6 +100,22 @@ public abstract class DomoduleThingHandler<T extends Domodule> extends BaseThing
     protected void onError(Throwable e) {
         logger.error("Error on domodule with ID {}.", getDomodule().getId(), e);
         updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, e.getMessage());
+    }
+
+    /**
+     * Retireve the domodule from the domoduleManager based on the DomoduleId of the thing.
+     */
+    @SuppressWarnings("unchecked")
+    private void retrieveDomodule() {
+        String domoduleId = (String) thing.getConfiguration().get(DomoduleBindingConstants.PROPERTY_DOMODULE_ID);
+        Domodule domodule = domoduleManager.getDomoduleById(domoduleId);
+
+        if (domodule != null) {
+            // No ClassCastException should be thrown.
+            // If so, it is a bug since the *HandlerFactory has not built the right ThingHandler for the
+            // domoduleModel.
+            this.domodule = (T) domodule;
+        }
     }
 
 }

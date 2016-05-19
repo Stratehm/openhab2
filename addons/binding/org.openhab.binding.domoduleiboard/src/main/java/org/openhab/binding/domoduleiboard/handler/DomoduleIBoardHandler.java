@@ -24,6 +24,7 @@ import org.openhab.binding.domoduleiboard.DomoduleIBoardBindingConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import strat.domo.domodule.api.manager.DomoduleManager;
 import strat.domo.domodule.api.protocol.command.CommandDomoduleMessage;
 import strat.domo.domodule.api.protocol.command.CommandParameter;
 import strat.domo.domodule.api.protocol.command.CommandResponseCallback;
@@ -41,8 +42,8 @@ public class DomoduleIBoardHandler extends DomoduleThingHandler<DomoduleIBoardUD
 
     private Logger logger = LoggerFactory.getLogger(DomoduleIBoardHandler.class);
 
-    public DomoduleIBoardHandler(Thing thing) {
-        super(thing);
+    public DomoduleIBoardHandler(Thing thing, DomoduleManager domoduleManager) {
+        super(thing, domoduleManager);
     }
 
     @Override

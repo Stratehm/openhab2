@@ -19,5 +19,6 @@
    
    <reference name="eventBusProvider" interface="org.openhab.binding.domodule.api.DomoduleEventBusProvider" cardinality="1..1" policy="static" bind="setDomoduleEventBusProvider" />
    <reference name="discoveryManager" interface="org.openhab.binding.domodule.api.DomoduleDiscoveryManagerProvider" cardinality="1..1" policy="static" bind="setDmomoduleDiscoveryManagerProvider" />
+   <reference name="domoduleHandlerFactory" interface="org.openhab.binding.domodule.api.DomoduleHandlerFactory" cardinality="0..n" policy="dynamic" bind="bindDomoduleFactory" unbind="unbindDomoduleFactory" />
 
 </scr:component>

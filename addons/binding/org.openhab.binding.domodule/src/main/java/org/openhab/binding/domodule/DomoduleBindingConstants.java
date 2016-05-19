@@ -25,6 +25,6 @@ public class DomoduleBindingConstants {
     // List of all Channel ids
     public final static String CHANNEL_1 = "channel1";
 
-    public static final String PROPERTY_DOMODULE = "domodule";
+    public static final String PROPERTY_DOMODULE_ID = "domoduleId";
 
 }

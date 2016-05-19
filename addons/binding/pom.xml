@@ -50,7 +50,6 @@
     <module>org.openhab.binding.systeminfo</module>
     <module>org.openhab.binding.systeminfo.test</module>
     <module>org.openhab.binding.zwave.test</module>
-    <module>org.openhab.binding.domodulebootloader</module>
     <module>org.openhab.binding.domodule</module>
     <module>org.openhab.binding.domoduledatagram</module>
     <module>org.openhab.binding.domoduleiboard</module>

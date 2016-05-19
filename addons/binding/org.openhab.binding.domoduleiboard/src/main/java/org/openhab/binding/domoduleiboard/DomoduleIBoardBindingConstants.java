@@ -8,6 +8,7 @@
 package org.openhab.binding.domoduleiboard;
 
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
+import org.openhab.binding.domodule.DomoduleBindingConstants;
 
 /**
  * The {@link DomoduleIBoardBinding} class defines common constants, which are
@@ -17,9 +18,8 @@ import org.eclipse.smarthome.core.thing.ThingTypeUID;
  */
 public class DomoduleIBoardBindingConstants {
 
-    public static final String BINDING_ID = "domoduleiboard";
-
-    public final static ThingTypeUID THING_TYPE_IBOARD_UDP = new ThingTypeUID(BINDING_ID, "IBoardUDP");
+    public final static ThingTypeUID THING_TYPE_IBOARD_UDP = new ThingTypeUID(DomoduleBindingConstants.BINDING_ID,
+            "IBoardUDP");
 
     public final static String CHANNEL_ROLLERSHUTTER = "rollershutter";
     public final static String CHANNEL_TEMPERATURE = "temperature";

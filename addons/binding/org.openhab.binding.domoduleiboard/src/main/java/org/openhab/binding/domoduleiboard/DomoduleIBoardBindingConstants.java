@@ -25,4 +25,8 @@ public class DomoduleIBoardBindingConstants {
     public final static String CHANNEL_TEMPERATURE = "temperature";
     public final static String CHANNEL_HUMIDITY = "humidity";
 
+    public final static String DOMODULE_IBOARD_SCHEDULED_EXECUTOR_SERVICE_NAME = "DomoduleIBoardTimeout";
+
+    public final static int SENSOR_POLLING_DELAY_IN_SECONDS = 10;
+
 }

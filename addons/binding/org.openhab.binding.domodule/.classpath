@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry exported="true" kind="lib" path="lib/commons-collections4-4.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-lang3-3.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/domodule-api-1.0.0-SNAPSHOT.jar" sourcepath="C:/Dev/git/java-domodule-protocol"/>
+	<classpathentry exported="true" kind="lib" path="lib/domodule-api-1.0.0-SNAPSHOT.jar" sourcepath="C:/Dev/git/java-domodule-protocol/domodule-api"/>
 	<classpathentry exported="true" kind="lib" path="lib/mbassador-1.2.4.2.jar" sourcepath="C:/Users/Win7Dev64/.m2/repository/net/engio/mbassador/1.2.4.2/mbassador-1.2.4.2-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>

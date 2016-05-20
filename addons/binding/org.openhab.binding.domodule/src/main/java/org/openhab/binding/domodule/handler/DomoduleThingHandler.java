@@ -7,23 +7,14 @@
  */
 package org.openhab.binding.domodule.handler;
 
-import java.util.Collection;
-
-import org.eclipse.smarthome.config.discovery.DiscoveryListener;
-import org.eclipse.smarthome.config.discovery.DiscoveryResult;
-import org.eclipse.smarthome.config.discovery.DiscoveryService;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingStatus;
 import org.eclipse.smarthome.core.thing.ThingStatusDetail;
-import org.eclipse.smarthome.core.thing.ThingTypeUID;
-import org.eclipse.smarthome.core.thing.ThingUID;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
-import org.openhab.binding.domodule.DomoduleBindingConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import strat.domo.domodule.api.domodule.Domodule;
-import strat.domo.domodule.api.manager.DomoduleManager;
 
 /**
  * The {@link DomoduleThingHandler} is responsible for handling commands, which are
@@ -33,54 +24,15 @@ import strat.domo.domodule.api.manager.DomoduleManager;
  *
  * @param <T>
  */
-public abstract class DomoduleThingHandler<T extends Domodule> extends BaseThingHandler implements DiscoveryListener {
+public abstract class DomoduleThingHandler<T extends Domodule> extends BaseThingHandler {
 
     private Logger logger = LoggerFactory.getLogger(DomoduleThingHandler.class);
 
-    private DomoduleManager domoduleManager;
-
     private T domodule;
 
-    public DomoduleThingHandler(Thing thing, DomoduleManager domoduleManager) {
+    public DomoduleThingHandler(Thing thing, T domodule) {
         super(thing);
-        this.domoduleManager = domoduleManager;
-        retrieveDomodule();
-    }
-
-    @Override
-    public void initialize() {
-        if (domodule == null) {
-            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.HANDLER_CONFIGURATION_PENDING,
-                    "Waiting to discover the domodule...");
-        } else {
-            updateStatus(ThingStatus.ONLINE);
-        }
-    }
-
-    @Override
-    public void thingDiscovered(DiscoveryService source, DiscoveryResult result) {
-        if (result.getThingUID().equals(this.getThing().getUID())) {
-            // No ClassCastException should be thrown.
-            // If so, it is a bug since the *HandlerFactory has not built the right ThingHandler for the domodule.
-            retrieveDomodule();
-            updateStatus(ThingStatus.ONLINE);
-        }
-    }
-
-    @Override
-    public void thingRemoved(DiscoveryService source, ThingUID thingUID) {
-        if (thingUID.equals(this.getThing().getUID())) {
-            this.domodule = null;
-            updateStatus(ThingStatus.OFFLINE);
-        }
-
-    }
-
-    @Override
-    public Collection<ThingUID> removeOlderResults(DiscoveryService source, long timestamp,
-            Collection<ThingTypeUID> thingTypeUIDs) {
-        // Do nothing.
-        return null;
+        this.domodule = domodule;
     }
 
     /**
@@ -92,30 +44,20 @@ public abstract class DomoduleThingHandler<T extends Domodule> extends BaseThing
         return domodule;
     }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+        domodule = null;
+    }
+
     /**
      * Log the given Throwable and update the status of the domodule.
      *
      * @param e
      */
     protected void onError(Throwable e) {
-        logger.error("Error on domodule with ID {}.", getDomodule().getId(), e);
+        logger.error("Communication error with the domodule {}.", getDomodule().getId(), e);
         updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, e.getMessage());
-    }
-
-    /**
-     * Retireve the domodule from the domoduleManager based on the DomoduleId of the thing.
-     */
-    @SuppressWarnings("unchecked")
-    private void retrieveDomodule() {
-        String domoduleId = (String) thing.getConfiguration().get(DomoduleBindingConstants.PROPERTY_DOMODULE_ID);
-        Domodule domodule = domoduleManager.getDomoduleById(domoduleId);
-
-        if (domodule != null) {
-            // No ClassCastException should be thrown.
-            // If so, it is a bug since the *HandlerFactory has not built the right ThingHandler for the
-            // domoduleModel.
-            this.domodule = (T) domodule;
-        }
     }
 
 }

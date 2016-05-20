@@ -37,11 +37,8 @@ public class DomoduleDiscoveryService extends AbstractDiscoveryService {
 
     private Set<DomoduleHandlerFactory> domoduleHandlerFactories;
 
-    private boolean isBackgroundScanStartedOnce;
-
     public DomoduleDiscoveryService() throws IllegalArgumentException {
         super(5);
-        this.isBackgroundScanStartedOnce = false;
         this.domoduleHandlerFactories = Sets.newSetFromMap(new ConcurrentHashMap<DomoduleHandlerFactory, Boolean>());
     }
 
@@ -56,12 +53,7 @@ public class DomoduleDiscoveryService extends AbstractDiscoveryService {
 
     @Override
     protected synchronized void startBackgroundDiscovery() {
-        // Start a scan only once at startup. Other call are not are not necessary since
-        // the domodules advertise themselves when they are started.
-        if (!isBackgroundScanStartedOnce) {
-            startScan();
-            isBackgroundScanStartedOnce = true;
-        }
+        startScan();
     }
 
     @Handler
@@ -74,9 +66,10 @@ public class DomoduleDiscoveryService extends AbstractDiscoveryService {
         String firmware = event.getDomodule().getFirmwareId() + "-" + event.getDomodule().getFirmwareVersion();
         properties.put(Thing.PROPERTY_FIRMWARE_VERSION, firmware);
         properties.put(Thing.PROPERTY_MODEL_ID, event.getDomodule().getModel());
+        properties.putAll(event.getDomodule().getMetaData());
 
         DiscoveryResult result = DiscoveryResultBuilder.create(thingUID).withProperties(properties)
-                .withLabel(event.getDomodule().getName()).withRepresentationProperty("pof").build();
+                .withLabel(event.getDomodule().getName()).build();
 
         thingDiscovered(result);
     }

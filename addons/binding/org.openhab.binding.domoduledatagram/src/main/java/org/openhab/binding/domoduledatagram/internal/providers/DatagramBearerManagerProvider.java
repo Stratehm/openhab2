@@ -7,7 +7,6 @@ import org.openhab.binding.domodule.api.DomoduleBearerManagerProvider;
 import org.openhab.binding.domodule.api.DomoduleEventBusProvider;
 
 import net.engio.mbassy.bus.MBassador;
-import strat.domo.domodule.api.bearer.BearerManager;
 import strat.domo.domodule.bearer.datagram.DatagramBearerManagerImpl;
 
 public class DatagramBearerManagerProvider implements DomoduleBearerManagerProvider {
@@ -23,7 +22,7 @@ public class DatagramBearerManagerProvider implements DomoduleBearerManagerProvi
     }
 
     @Override
-    public BearerManager get() {
+    public DatagramBearerManagerImpl get() {
         return bearerManager;
     }
 

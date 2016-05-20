@@ -10,6 +10,7 @@ Bundle-ClassPath: .,
  lib/commons-collections4-4.1.jar,
  lib/commons-lang3-3.4.jar
 Import-Package: 
+ org.apache.commons.lang,
  org.eclipse.smarthome.config.core,
  org.eclipse.smarthome.config.discovery,
  org.eclipse.smarthome.core.common,

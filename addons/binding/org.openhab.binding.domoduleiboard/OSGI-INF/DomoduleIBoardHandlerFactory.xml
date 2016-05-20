@@ -15,5 +15,9 @@
    <service>
       <provide interface="org.openhab.binding.domodule.api.DomoduleHandlerFactory"/>
    </service>
+   
+   <reference name="domoduleEventBusProvider" interface="org.openhab.binding.domodule.api.DomoduleEventBusProvider" cardinality="1..1" policy="static" bind="setDomoduleEventBusProvider" />
+   <reference name="domoduleManagerProvider" interface="org.openhab.binding.domodule.api.DomoduleManagerProvider" cardinality="1..1" policy="static" bind="setDomoduleManagerProvider" />  
+   <reference name="bearerManagerProvider" interface="org.openhab.binding.domodule.api.DomoduleBearerManagerProvider" cardinality="1..n" policy="static" bind="setBearerManagerProvider" />  
 
 </scr:component>

@@ -16,8 +16,6 @@
       <provide interface="org.eclipse.smarthome.core.thing.binding.ThingHandlerFactory"/>
    </service>
    
-   
-   <reference name="domoduleManagerProvider" interface="org.openhab.binding.domodule.api.DomoduleManagerProvider" cardinality="1..1" policy="static" bind="setDomoduleManagerProvider"/>
    <reference name="domoduleHandlerFactory" interface="org.openhab.binding.domodule.api.DomoduleHandlerFactory" cardinality="0..n" policy="dynamic" bind="bindDomoduleFactory" unbind="unbindDomoduleFactory" />
 
 </scr:component>

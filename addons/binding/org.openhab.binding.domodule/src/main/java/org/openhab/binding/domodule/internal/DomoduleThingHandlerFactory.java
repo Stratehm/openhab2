@@ -15,11 +15,8 @@ import org.eclipse.smarthome.core.thing.ThingTypeUID;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandlerFactory;
 import org.eclipse.smarthome.core.thing.binding.ThingHandler;
 import org.openhab.binding.domodule.api.DomoduleHandlerFactory;
-import org.openhab.binding.domodule.api.DomoduleManagerProvider;
 
 import com.google.common.collect.Sets;
-
-import strat.domo.domodule.api.manager.DomoduleManager;
 
 /**
  * The {@link DomoduleThingHandlerFactory} is responsible for creating things and thing
@@ -30,8 +27,6 @@ import strat.domo.domodule.api.manager.DomoduleManager;
 public class DomoduleThingHandlerFactory extends BaseThingHandlerFactory {
 
     private Set<DomoduleHandlerFactory> domoduleHandlerFactories;
-
-    private DomoduleManager domoduleManager;
 
     public DomoduleThingHandlerFactory() {
         this.domoduleHandlerFactories = Sets.newSetFromMap(new ConcurrentHashMap<DomoduleHandlerFactory, Boolean>());
@@ -52,7 +47,7 @@ public class DomoduleThingHandlerFactory extends BaseThingHandlerFactory {
         ThingHandler thingHandler = null;
         for (DomoduleHandlerFactory domoduleHandlerFactory : domoduleHandlerFactories) {
             if (domoduleHandlerFactory.getSupportedThings().contains(thing.getThingTypeUID())) {
-                thingHandler = domoduleHandlerFactory.createHandler(thing, domoduleManager);
+                thingHandler = domoduleHandlerFactory.createHandler(thing);
             }
         }
         return thingHandler;
@@ -64,9 +59,5 @@ public class DomoduleThingHandlerFactory extends BaseThingHandlerFactory {
 
     public void unbindDomoduleFactory(DomoduleHandlerFactory factory) {
         domoduleHandlerFactories.remove(factory);
-    }
-
-    public void setDomoduleManagerProvider(DomoduleManagerProvider provider) {
-        this.domoduleManager = provider.get();
     }
 }

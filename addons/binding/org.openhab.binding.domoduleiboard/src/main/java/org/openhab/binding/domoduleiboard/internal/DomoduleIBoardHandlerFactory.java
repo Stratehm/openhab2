@@ -111,16 +111,16 @@ public class DomoduleIBoardHandlerFactory implements DomoduleHandlerFactory {
     }
 
     public void setDomoduleEventBusProvider(DomoduleEventBusProvider provider) {
-        this.eventBus = provider.get();
+        this.eventBus = provider.getEventBus();
     }
 
     public void setDomoduleManagerProvider(DomoduleManagerProvider provider) {
-        this.domoduleManager = provider.get();
+        this.domoduleManager = provider.getManager();
     }
 
     public void setBearerManagerProvider(DomoduleBearerManagerProvider provider) {
-        if (provider.get() instanceof AbstractDatagramBearerManager) {
-            this.datagramBearer = (AbstractDatagramBearerManager) provider.get();
+        if (provider.getBearerManager() instanceof AbstractDatagramBearerManager) {
+            this.datagramBearer = (AbstractDatagramBearerManager) provider.getBearerManager();
         }
     }
 }

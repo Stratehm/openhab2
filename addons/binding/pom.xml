@@ -53,6 +53,7 @@
     <module>org.openhab.binding.domodule</module>
     <module>org.openhab.binding.domoduledatagram</module>
     <module>org.openhab.binding.domoduleiboard</module>
+    <module>org.openhab.binding.domodulebootloader</module>
   </modules>
 
 </project>

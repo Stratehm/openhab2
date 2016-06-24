@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: domodulebootloader Binding
+Bundle-SymbolicName: org.openhab.binding.domodulebootloader;singleton:=true
+Bundle-Vendor: openHAB
+Bundle-Version: 2.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ClassPath: .,
+ lib/commons-collections4-4.1.jar,
+ lib/commons-lang3-3.4.jar,
+ lib/domodule-bootloader-command-protocol-1.0.0-SNAPSHOT.jar
+Import-Package: 
+ org.openhab.binding.domodulebootloader,
+ org.eclipse.smarthome.config.core,
+ org.slf4j
+Service-Component: OSGI-INF/*.xml
+Export-Package: org.openhab.binding.domodulebootloader,
+ strat.domo.domodule.bootloader.api.exception,
+ strat.domo.domodule.bootloader.api.firmware,
+ strat.domo.domodule.bootloader.api.firmware.provider,
+ strat.domo.domodule.bootloader.api.firmware.registry,
+ strat.domo.domodule.bootloader.api.firmware.resolver,
+ strat.domo.domodule.bootloader.api.firmware.selector,
+ strat.domo.domodule.bootloader.api.firmware.selector.rule,
+ strat.domo.domodule.bootloader.api.firmware.utils,
+ strat.domo.domodule.bootloader.api.firmware.zip,
+ strat.domo.domodule.bootloader.api.model,
+ strat.domo.domodule.bootloader.api.util
+Fragment-Host: org.openhab.binding.domodule

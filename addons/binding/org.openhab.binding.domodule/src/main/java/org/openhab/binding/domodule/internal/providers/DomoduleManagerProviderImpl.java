@@ -14,7 +14,7 @@ public class DomoduleManagerProviderImpl implements DomoduleManagerProvider {
     private DomoduleManager domoduleManager;
 
     @Override
-    public DomoduleManager get() {
+    public DomoduleManager getManager() {
         return domoduleManager;
     }
 
@@ -23,7 +23,7 @@ public class DomoduleManagerProviderImpl implements DomoduleManagerProvider {
     }
 
     public void setDomoduleEventBusProvider(DomoduleEventBusProvider provider) {
-        this.eventBus = provider.get();
+        this.eventBus = provider.getEventBus();
     }
 
 }

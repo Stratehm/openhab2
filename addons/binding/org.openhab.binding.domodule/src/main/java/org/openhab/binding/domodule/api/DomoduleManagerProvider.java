@@ -10,6 +10,6 @@ import strat.domo.domodule.api.manager.DomoduleManager;
  */
 public interface DomoduleManagerProvider {
 
-    DomoduleManager get();
+    DomoduleManager getManager();
 
 }

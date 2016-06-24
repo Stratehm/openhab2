@@ -10,6 +10,6 @@ import net.engio.mbassy.bus.MBassador;
  */
 public interface DomoduleEventBusProvider {
 
-    MBassador<Object> get();
+    MBassador<Object> getEventBus();
 
 }

@@ -6,6 +6,6 @@ import strat.domo.domodule.api.protocol.command.definition.CommandSetDefinition;
 
 public interface DomoduleCommandSetProvider {
 
-    public CommandSetDefinition<? extends CommandDefinition, ? extends CommandParameterDefinition> get();
+    public CommandSetDefinition<? extends CommandDefinition, ? extends CommandParameterDefinition> getCommandSetDefinition();
 
 }

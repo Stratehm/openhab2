@@ -10,10 +10,10 @@
 -->
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="binding.domodule.provider.domodulecommandprotocolmanager">
 
-   <implementation class="org.openhab.binding.domodule.internal.providers.DomoduleCommandProtocolManagerProvider"/>
+   <implementation class="org.openhab.binding.domodule.internal.providers.DomoduleCommandProtocolMessageFactoryProvider"/>
 
    <service>
-      <provide interface="org.openhab.binding.domodule.api.DomoduleProtocolManagerProvider"/>
+      <provide interface="org.openhab.binding.domodule.api.DomoduleProtocolMessageFactoryProvider"/>
    </service>
    
    <reference name="eventBusProvider" interface="org.openhab.binding.domodule.api.DomoduleEventBusProvider" cardinality="1..1" policy="static" bind="setDomoduleEventBusProvider" />

@@ -8,9 +8,9 @@
     http://www.eclipse.org/legal/epl-v10.html
 
 -->
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="binding.domoduleiboard.provider.iboardcommandset">
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="binding.domodule.provider.managementcommandset">
 
-   <implementation class="org.openhab.binding.domoduleiboard.internal.providers.DomoduleIBoardCommandSetProvider"/>
+   <implementation class="org.openhab.binding.domodule.internal.providers.DomoduleActuatorCommandSetProvider"/>
 
    <service>
       <provide interface="org.openhab.binding.domodule.api.DomoduleCommandSetProvider"/>

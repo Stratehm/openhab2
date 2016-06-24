@@ -31,7 +31,7 @@ public class DomoduleDiscoveryManagerProviderImpl implements DomoduleDiscoveryMa
     }
 
     @Override
-    public DiscoveryManager get() {
+    public DiscoveryManager getDiscoveryManager() {
         return discoveryManager;
     }
 
@@ -40,19 +40,19 @@ public class DomoduleDiscoveryManagerProviderImpl implements DomoduleDiscoveryMa
     }
 
     public void setDomoduleEventBusProvider(DomoduleEventBusProvider provider) {
-        this.eventBus = provider.get();
+        this.eventBus = provider.getEventBus();
     }
 
     public void setDomoduleManagerProvider(DomoduleManagerProvider provider) {
-        this.domoduleManager = provider.get();
+        this.domoduleManager = provider.getManager();
     }
 
     public void bindDomoduleFactoryProvider(DomoduleFactoryProvider provider) {
-        domodulesFactories.add(provider.get());
+        domodulesFactories.add(provider.getDomoduleFactory());
     }
 
     public void unbindDomoduleFactoryProvider(DomoduleFactoryProvider provider) {
-        domodulesFactories.remove(provider.get());
+        domodulesFactories.remove(provider.getDomoduleFactory());
     }
 
 }

@@ -21,12 +21,12 @@ public class DomoduleIBoardFactoryProvider implements DomoduleFactoryProvider {
     }
 
     @Override
-    public DomoduleFactory get() {
+    public DomoduleFactory getDomoduleFactory() {
         return factory;
     }
 
     public void setDomoduleEventBusProvider(DomoduleEventBusProvider provider) {
-        this.eventBus = provider.get();
+        this.eventBus = provider.getEventBus();
     }
 
 }

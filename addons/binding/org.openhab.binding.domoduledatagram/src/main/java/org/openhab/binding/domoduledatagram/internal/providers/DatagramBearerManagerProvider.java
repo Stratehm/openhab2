@@ -22,12 +22,12 @@ public class DatagramBearerManagerProvider implements DomoduleBearerManagerProvi
     }
 
     @Override
-    public DatagramBearerManagerImpl get() {
+    public DatagramBearerManagerImpl getBearerManager() {
         return bearerManager;
     }
 
     public void setDomoduleEventBusProvider(DomoduleEventBusProvider provider) {
-        this.eventBus = provider.get();
+        this.eventBus = provider.getEventBus();
     }
 
 }

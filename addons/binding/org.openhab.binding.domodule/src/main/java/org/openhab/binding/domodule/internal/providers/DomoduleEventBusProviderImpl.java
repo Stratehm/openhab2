@@ -9,7 +9,7 @@ public class DomoduleEventBusProviderImpl implements DomoduleEventBusProvider {
     private MBassador<Object> mBassador;
 
     @Override
-    public MBassador<Object> get() {
+    public MBassador<Object> getEventBus() {
         return mBassador;
     }
 

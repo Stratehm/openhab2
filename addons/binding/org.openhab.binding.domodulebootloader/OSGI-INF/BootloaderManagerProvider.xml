@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2014-2015 openHAB UG (haftungsbeschraenkt) and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+-->
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="binding.domodule.provider.bootloadermanager">
+
+   <implementation class="org.openhab.binding.domodulebootloader.internal.providers.BootloaderManagerProviderImpl"/>
+
+   <service>
+      <provide interface="org.openhab.binding.domodulebootloader.api.BootloaderManagerProvider"/>
+   </service>
+   
+   <reference name="eventBusProvider" interface="org.openhab.binding.domodule.api.DomoduleEventBusProvider" cardinality="1..1" policy="static" bind="setEventBusProvider" />
+   <reference name="firmwareSelectorProvider" interface="org.openhab.binding.domodulebootloader.api.FirmwareSelectorProvider" cardinality="1..1" policy="static" bind="setFirmwareSelectorProvider" />
+   <reference name="firmwareResolverProvider" interface="org.openhab.binding.domodulebootloader.api.FirmwareResolverProvider" cardinality="1..1" policy="static" bind="setFirmwareResolverProvider" />
+
+</scr:component>

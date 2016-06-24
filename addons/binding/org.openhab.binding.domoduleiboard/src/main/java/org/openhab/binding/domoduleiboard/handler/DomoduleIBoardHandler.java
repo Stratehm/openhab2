@@ -27,13 +27,15 @@ import org.openhab.binding.domoduleiboard.DomoduleIBoardBindingConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import strat.domo.domodule.api.impl.protocol.command.definition.ManagementCommandDefinition;
+import strat.domo.domodule.api.impl.protocol.command.definition.actuator.ActuatorCommandDefinition;
+import strat.domo.domodule.api.impl.protocol.command.definition.actuator.ActuatorCommandParameterDefinition;
+import strat.domo.domodule.api.impl.protocol.command.definition.management.ManagementCommandDefinition;
+import strat.domo.domodule.api.impl.protocol.command.definition.sensor.SensorCommandDefinition;
+import strat.domo.domodule.api.impl.protocol.command.definition.sensor.SensorCommandParameterDefinition;
 import strat.domo.domodule.api.protocol.command.CommandDomoduleMessage;
 import strat.domo.domodule.api.protocol.command.CommandParameter;
 import strat.domo.domodule.api.protocol.command.CommandResponseCallback;
 import strat.domo.domodule.driver.iboard.DomoduleIBoardUDP;
-import strat.domo.domodule.driver.iboard.command.IBoardCommandDefinition;
-import strat.domo.domodule.driver.iboard.command.IBoardCommandParameterDefinition;
 
 /**
  * The {@link DomoduleIBoardHandler} is responsible for handling commands, which are
@@ -84,12 +86,17 @@ public class DomoduleIBoardHandler extends DomoduleThingHandler<DomoduleIBoardUD
     }
 
     protected void processRollershutterCommand(final ChannelUID channelUID, Command command) throws IOException {
+        List<CommandParameter> parameters = new ArrayList<>();
+        parameters.add(new CommandParameter(ActuatorCommandParameterDefinition.ACTUATOR_INDEX, (byte) 0));
+
         if (command == UpDownType.UP) {
-            getDomodule().sendCommand(IBoardCommandDefinition.UP);
+            parameters.add(new CommandParameter(ActuatorCommandParameterDefinition.TOP));
+            getDomodule().sendCommand(ActuatorCommandDefinition.MOVE, parameters);
         } else if (command == UpDownType.DOWN) {
-            getDomodule().sendCommand(IBoardCommandDefinition.DOWN);
+            parameters.add(new CommandParameter(ActuatorCommandParameterDefinition.BOTTOM));
+            getDomodule().sendCommand(ActuatorCommandDefinition.MOVE, parameters);
         } else if (command == StopMoveType.STOP) {
-            getDomodule().sendCommand(IBoardCommandDefinition.STOP);
+            getDomodule().sendCommand(ActuatorCommandDefinition.STOP, parameters);
         }
     }
 
@@ -106,14 +113,13 @@ public class DomoduleIBoardHandler extends DomoduleThingHandler<DomoduleIBoardUD
 
     protected void updateSensorChannel(final String channelUID) throws IOException {
         List<CommandParameter> parameters = new ArrayList<>();
-        // The IBoard domodule has only one temp sensor and one humidity sensor => the sensor index is 0 in each
-        // case.
-        parameters.add(new CommandParameter(IBoardCommandParameterDefinition.SENSOR_INDEX, (byte) 0));
+        // The IBoard domodule has only one sensor but it has 2 values (temp and humidity)
+        // value 0 is the temp and 1 is the humidity.
+        parameters.add(new CommandParameter(SensorCommandParameterDefinition.SENSOR_INDEX, (byte) 0));
+        parameters.add(new CommandParameter(SensorCommandParameterDefinition.VALUE_INDEX,
+                channelUID.equals(DomoduleIBoardBindingConstants.CHANNEL_TEMPERATURE) ? (byte) 0 : (byte) 1));
 
-        IBoardCommandDefinition domoduleCommand = channelUID.equals(DomoduleIBoardBindingConstants.CHANNEL_TEMPERATURE)
-                ? IBoardCommandDefinition.GET_TEMPERATURE : IBoardCommandDefinition.GET_HUMIDITY;
-
-        getDomodule().sendCommand(domoduleCommand, parameters, new CommandResponseCallback() {
+        getDomodule().sendCommand(SensorCommandDefinition.GET_VALUE, parameters, new CommandResponseCallback() {
             @Override
             public void onFailure(CommandDomoduleMessage response, Throwable t) {
                 onError(t);
@@ -121,7 +127,7 @@ public class DomoduleIBoardHandler extends DomoduleThingHandler<DomoduleIBoardUD
 
             @Override
             public void onResponse(CommandDomoduleMessage request, CommandDomoduleMessage response) {
-                CommandParameter sensorValue = response.getParameter(IBoardCommandParameterDefinition.SENSOR_VALUE);
+                CommandParameter sensorValue = response.getParameter(SensorCommandParameterDefinition.VALUE);
                 if (sensorValue != null) {
                     updateState(channelUID, new DecimalType(new BigDecimal(sensorValue.getValueAsFloat())));
                 } else {

@@ -84,11 +84,11 @@ public class DomoduleDiscoveryService extends AbstractDiscoveryService {
     }
 
     public void setDmomoduleDiscoveryManagerProvider(DomoduleDiscoveryManagerProvider provider) {
-        this.discoveryManager = provider.get();
+        this.discoveryManager = provider.getDiscoveryManager();
     }
 
     public void setDomoduleEventBusProvider(DomoduleEventBusProvider provider) {
-        this.eventBus = provider.get();
+        this.eventBus = provider.getEventBus();
         this.eventBus.subscribe(this);
     }
 

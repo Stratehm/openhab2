@@ -10,6 +10,6 @@ import strat.domo.domodule.api.factory.DomoduleFactory;
  */
 public interface DomoduleFactoryProvider {
 
-    DomoduleFactory get();
+    DomoduleFactory getDomoduleFactory();
 
 }

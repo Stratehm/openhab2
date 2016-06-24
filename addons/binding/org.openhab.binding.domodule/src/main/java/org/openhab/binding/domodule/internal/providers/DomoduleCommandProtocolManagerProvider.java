@@ -5,22 +5,21 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.openhab.binding.domodule.api.DomoduleCommandSetProvider;
 import org.openhab.binding.domodule.api.DomoduleEventBusProvider;
-import org.openhab.binding.domodule.api.DomoduleProtocolManagerProvider;
+import org.openhab.binding.domodule.api.DomoduleProtocolMessageFactoryProvider;
 
 import com.google.common.collect.Sets;
 
 import net.engio.mbassy.bus.MBassador;
-import strat.domo.domodule.api.impl.protocol.command.CommandDomoduleMessageFactoryImpl;
-import strat.domo.domodule.api.impl.protocol.command.CommandProtocolManager;
+import strat.domo.domodule.api.impl.protocol.command.CommandProtocolMessageFactory;
 import strat.domo.domodule.api.message.DomoduleMessage;
-import strat.domo.domodule.api.protocol.ProtocolManager;
+import strat.domo.domodule.api.protocol.ProtocolMessageFactory;
 import strat.domo.domodule.api.protocol.command.definition.CommandSetDefinition;
 
-public class DomoduleCommandProtocolManagerProvider implements DomoduleProtocolManagerProvider {
+public class DomoduleCommandProtocolManagerProvider implements DomoduleProtocolMessageFactoryProvider {
 
     private MBassador<Object> eventBus;
 
-    private CommandProtocolManager protocolManager;
+    private CommandProtocolMessageFactory protocolMessageFactory;
 
     private Set<CommandSetDefinition<?, ?>> commandSets;
 
@@ -29,24 +28,24 @@ public class DomoduleCommandProtocolManagerProvider implements DomoduleProtocolM
     }
 
     protected void activate() {
-        protocolManager = new CommandProtocolManager(eventBus, new CommandDomoduleMessageFactoryImpl(commandSets));
+        protocolMessageFactory = new CommandProtocolMessageFactory(eventBus, commandSets);
     }
 
     @Override
-    public ProtocolManager<? extends DomoduleMessage> get() {
-        return protocolManager;
+    public ProtocolMessageFactory<? extends DomoduleMessage> getProtocolMessageFactory() {
+        return protocolMessageFactory;
     }
 
     public void setDomoduleEventBusProvider(DomoduleEventBusProvider provider) {
-        this.eventBus = provider.get();
+        this.eventBus = provider.getEventBus();
     }
 
     public void bindCommandSetDefinition(DomoduleCommandSetProvider provider) {
-        commandSets.add(provider.get());
+        commandSets.add(provider.getCommandSetDefinition());
     }
 
     public void unbindCommandSetDefinition(DomoduleCommandSetProvider provider) {
-        commandSets.remove(provider.get());
+        commandSets.remove(provider.getCommandSetDefinition());
     }
 
 }

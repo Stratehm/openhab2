@@ -10,5 +10,5 @@ import strat.domo.domodule.api.manager.DiscoveryManager;
  */
 public interface DomoduleDiscoveryManagerProvider {
 
-    DiscoveryManager get();
+    DiscoveryManager getDiscoveryManager();
 }

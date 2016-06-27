@@ -6,15 +6,15 @@ import net.engio.mbassy.bus.MBassador;
 
 public class DomoduleEventBusProviderImpl implements DomoduleEventBusProvider {
 
-    private MBassador<Object> mBassador;
+    private MBassador<Object> instance;
+
+    protected void activate() {
+        instance = new MBassador<>();
+    }
 
     @Override
     public MBassador<Object> getEventBus() {
-        return mBassador;
-    }
-
-    protected void activate() {
-        mBassador = new MBassador<>();
+        return instance;
     }
 
 }

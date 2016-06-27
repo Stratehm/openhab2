@@ -15,25 +15,25 @@ import strat.domo.domodule.api.message.DomoduleMessage;
 import strat.domo.domodule.api.protocol.ProtocolMessageFactory;
 import strat.domo.domodule.api.protocol.command.definition.CommandSetDefinition;
 
-public class DomoduleCommandProtocolManagerProvider implements DomoduleProtocolMessageFactoryProvider {
+public class DomoduleCommandProtocolMessageFactoryProvider implements DomoduleProtocolMessageFactoryProvider {
 
     private MBassador<Object> eventBus;
 
-    private CommandProtocolMessageFactory protocolMessageFactory;
+    private CommandProtocolMessageFactory instance;
 
     private Set<CommandSetDefinition<?, ?>> commandSets;
 
-    public DomoduleCommandProtocolManagerProvider() {
+    public DomoduleCommandProtocolMessageFactoryProvider() {
         commandSets = Sets.newSetFromMap(new ConcurrentHashMap<CommandSetDefinition<?, ?>, Boolean>());
     }
 
     protected void activate() {
-        protocolMessageFactory = new CommandProtocolMessageFactory(eventBus, commandSets);
+        instance = new CommandProtocolMessageFactory(eventBus, commandSets);
     }
 
     @Override
     public ProtocolMessageFactory<? extends DomoduleMessage> getProtocolMessageFactory() {
-        return protocolMessageFactory;
+        return instance;
     }
 
     public void setDomoduleEventBusProvider(DomoduleEventBusProvider provider) {

@@ -18,7 +18,7 @@ import strat.domo.domodule.api.manager.DomoduleManager;
 
 public class DomoduleDiscoveryManagerProviderImpl implements DomoduleDiscoveryManagerProvider {
 
-    private DiscoveryManager discoveryManager;
+    private DiscoveryManager instance;
 
     private MBassador<Object> eventBus;
 
@@ -32,11 +32,11 @@ public class DomoduleDiscoveryManagerProviderImpl implements DomoduleDiscoveryMa
 
     @Override
     public DiscoveryManager getDiscoveryManager() {
-        return discoveryManager;
+        return instance;
     }
 
     protected void activate() {
-        discoveryManager = new DiscoveryManagerImpl(eventBus, domoduleManager, domodulesFactories);
+        instance = new DiscoveryManagerImpl(eventBus, domoduleManager, domodulesFactories);
     }
 
     public void setDomoduleEventBusProvider(DomoduleEventBusProvider provider) {

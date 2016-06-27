@@ -9,9 +9,15 @@ import strat.domo.domodule.api.protocol.command.definition.CommandSetDefinition;
 
 public class DomoduleBootloaderCommandSetProvider implements DomoduleCommandSetProvider {
 
+    private BootloaderCommandSetDefinition instance;
+
+    protected void activate() {
+        instance = new BootloaderCommandSetDefinition();
+    }
+
     @Override
     public CommandSetDefinition<? extends CommandDefinition, ? extends CommandParameterDefinition> getCommandSetDefinition() {
-        return new BootloaderCommandSetDefinition();
+        return instance;
     }
 
 }

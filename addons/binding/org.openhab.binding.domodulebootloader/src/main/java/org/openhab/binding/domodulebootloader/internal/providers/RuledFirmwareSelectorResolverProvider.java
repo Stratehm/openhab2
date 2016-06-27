@@ -5,6 +5,7 @@ import org.openhab.binding.domodulebootloader.api.FirmwareResolverProvider;
 import org.openhab.binding.domodulebootloader.api.FirmwareSelectorProvider;
 import org.openhab.binding.domodulebootloader.api.RuledFirmwareSelectorProvider;
 
+import strat.domo.domodule.bootloader.api.firmware.registry.FirmwareRegistry;
 import strat.domo.domodule.bootloader.api.firmware.resolver.FirmwareResolver;
 import strat.domo.domodule.bootloader.api.firmware.selector.FirmwareSelector;
 import strat.domo.domodule.bootloader.api.firmware.selector.RuledFirmwareSelector;
@@ -13,33 +14,31 @@ import strat.domo.domodule.bootloader.api.firmware.selector.rule.RuledFirmwareSe
 public class RuledFirmwareSelectorResolverProvider
         implements FirmwareSelectorProvider, RuledFirmwareSelectorProvider, FirmwareResolverProvider {
 
-    private RuledFirmwareSelectorAndResolver selectorAndResolver;
+    private RuledFirmwareSelectorAndResolver instance;
+
+    private FirmwareRegistry firmwareRegistry;
 
     protected void activate() {
-        selectorAndResolver = new RuledFirmwareSelectorAndResolver();
+        instance = new RuledFirmwareSelectorAndResolver(firmwareRegistry);
     }
 
     @Override
     public RuledFirmwareSelector getRuledFirmwareSelector() {
-        return selectorAndResolver;
+        return instance;
     }
 
     @Override
     public FirmwareSelector getFirmwareSelector() {
-        return selectorAndResolver;
+        return instance;
     }
 
     @Override
     public FirmwareResolver getFirmwareResolver() {
-        return selectorAndResolver;
+        return instance;
     }
 
-    public void bindFirmwareRegistryProvider(FirmwareRegistryProvider provider) {
-        selectorAndResolver.addFirmwareRegistry(provider.getFirmwareRegistry());
-    }
-
-    public void unbindFirmwareRegistryProvider(FirmwareRegistryProvider provider) {
-        selectorAndResolver.removeFirmwareRegistry(provider.getFirmwareRegistry());
+    public void setFirmwareRegistryProvider(FirmwareRegistryProvider provider) {
+        firmwareRegistry = provider.getFirmwareRegistry();
     }
 
 }

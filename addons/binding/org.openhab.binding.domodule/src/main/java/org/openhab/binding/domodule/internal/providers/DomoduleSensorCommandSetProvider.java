@@ -9,9 +9,15 @@ import strat.domo.domodule.api.protocol.command.definition.CommandSetDefinition;
 
 public class DomoduleSensorCommandSetProvider implements DomoduleCommandSetProvider {
 
+    private SensorCommandSetDefinition instance;
+
+    protected void activate() {
+        instance = new SensorCommandSetDefinition();
+    }
+
     @Override
     public CommandSetDefinition<? extends CommandDefinition, ? extends CommandParameterDefinition> getCommandSetDefinition() {
-        return new SensorCommandSetDefinition();
+        return instance;
     }
 
 }

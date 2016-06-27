@@ -17,7 +17,7 @@ import strat.domo.domodule.bootloader.api.firmware.zip.ZipFileDirectoryWatcherFi
  */
 public class ZipFirmwareProviderProvider implements FirmwareProviderProvider {
 
-    private ZipFileDirectoryWatcherFirmwareProvider provider;
+    private ZipFileDirectoryWatcherFirmwareProvider instance;
 
     protected void activate() throws IOException {
         String userDataFolder = ConfigConstants.getUserDataFolder();
@@ -31,12 +31,12 @@ public class ZipFirmwareProviderProvider implements FirmwareProviderProvider {
             }
         }
 
-        provider = new ZipFileDirectoryWatcherFirmwareProvider(firmwaresDirectory, true);
+        instance = new ZipFileDirectoryWatcherFirmwareProvider(firmwaresDirectory, true);
     }
 
     @Override
     public FirmwareProvider getFirmwareProvider() {
-        return provider;
+        return instance;
     }
 
 }

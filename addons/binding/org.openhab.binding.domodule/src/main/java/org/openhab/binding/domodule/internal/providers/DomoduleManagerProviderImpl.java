@@ -11,15 +11,15 @@ public class DomoduleManagerProviderImpl implements DomoduleManagerProvider {
 
     private MBassador<Object> eventBus;
 
-    private DomoduleManager domoduleManager;
+    private DomoduleManager instance;
+
+    protected void activate() {
+        instance = new DomoduleManagerImpl(eventBus);
+    }
 
     @Override
     public DomoduleManager getManager() {
-        return domoduleManager;
-    }
-
-    protected void activate() {
-        domoduleManager = new DomoduleManagerImpl(eventBus);
+        return instance;
     }
 
     public void setDomoduleEventBusProvider(DomoduleEventBusProvider provider) {

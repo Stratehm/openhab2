@@ -19,15 +19,15 @@ public class BootloaderManagerProviderImpl implements BootloaderManagerProvider 
 
     private FirmwareResolver firmwareResolver;
 
-    private BootloaderManagerImpl bootloaderManager;
+    private BootloaderManagerImpl instance;
 
     protected void activate() {
-        bootloaderManager = new BootloaderManagerImpl(eventBus, firmwareSelector, firmwareResolver);
+        instance = new BootloaderManagerImpl(eventBus, firmwareSelector, firmwareResolver);
     }
 
     @Override
     public BootloaderManager getBootloaderManager() {
-        return bootloaderManager;
+        return instance;
     }
 
     public void setEventBusProvider(DomoduleEventBusProvider provider) {

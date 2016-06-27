@@ -13,17 +13,15 @@ public class DatagramBearerManagerProvider implements DomoduleBearerManagerProvi
 
     private MBassador<Object> eventBus;
 
-    private DatagramBearerManagerImpl bearerManager;
+    private DatagramBearerManagerImpl instance;
 
     protected void activate() throws IOException {
-        bearerManager = new DatagramBearerManagerImpl(eventBus,
-                ThreadPoolManager.getPool("DomoduleDatagramBrearerManager"));
-        bearerManager.start();
+        instance = new DatagramBearerManagerImpl(eventBus, ThreadPoolManager.getPool("DomoduleDatagramBrearerManager"));
     }
 
     @Override
     public DatagramBearerManagerImpl getBearerManager() {
-        return bearerManager;
+        return instance;
     }
 
     public void setDomoduleEventBusProvider(DomoduleEventBusProvider provider) {

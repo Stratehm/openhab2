@@ -9,9 +9,15 @@ import strat.domo.domodule.api.protocol.command.definition.CommandSetDefinition;
 
 public class DomoduleManagementCommandSetProvider implements DomoduleCommandSetProvider {
 
+    private ManagementCommandSetDefinition instance;
+
+    protected void activate() {
+        instance = new ManagementCommandSetDefinition();
+    }
+
     @Override
     public CommandSetDefinition<? extends CommandDefinition, ? extends CommandParameterDefinition> getCommandSetDefinition() {
-        return new ManagementCommandSetDefinition();
+        return instance;
     }
 
 }

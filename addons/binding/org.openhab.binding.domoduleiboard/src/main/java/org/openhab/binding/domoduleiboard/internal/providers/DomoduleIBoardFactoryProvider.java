@@ -13,16 +13,16 @@ public class DomoduleIBoardFactoryProvider implements DomoduleFactoryProvider {
 
     private MBassador<Object> eventBus;
 
-    private DomoduleIBoardFactory factory;
+    private DomoduleIBoardFactory instance;
 
     protected void activate() {
-        this.factory = new DomoduleIBoardFactory(eventBus, ThreadPoolManager
+        this.instance = new DomoduleIBoardFactory(eventBus, ThreadPoolManager
                 .getScheduledPool(DomoduleIBoardBindingConstants.DOMODULE_IBOARD_SCHEDULED_EXECUTOR_SERVICE_NAME));
     }
 
     @Override
     public DomoduleFactory getDomoduleFactory() {
-        return factory;
+        return instance;
     }
 
     public void setDomoduleEventBusProvider(DomoduleEventBusProvider provider) {

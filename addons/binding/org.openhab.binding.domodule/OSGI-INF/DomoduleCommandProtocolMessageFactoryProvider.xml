@@ -8,7 +8,7 @@
     http://www.eclipse.org/legal/epl-v10.html
 
 -->
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="binding.domodule.provider.domodulecommandprotocolmessagefactory">
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="binding.domodule.provider.domodulecommandprotocolmessagefactoryprovider">
 
    <implementation class="org.openhab.binding.domodule.internal.providers.DomoduleCommandProtocolMessageFactoryProvider"/>
 
@@ -17,6 +17,6 @@
    </service>
    
    <reference name="eventBusProvider" interface="org.openhab.binding.domodule.api.DomoduleEventBusProvider" cardinality="1..1" policy="static" bind="setDomoduleEventBusProvider" />
-   <reference name="commandSetDefinition" interface="org.openhab.binding.domodule.api.DomoduleCommandSetProvider" cardinality="0..n" policy="dynamic" bind="bindCommandSetDefinition" unbind="unbindCommandSetDefinition" />
+   <reference name="commandSetManagerProvider" interface="org.openhab.binding.domodule.api.DomoduleCommandSetManagerProvider" cardinality="1..1" policy="static" bind="setCommandSetManagerProvider" />
 
 </scr:component>

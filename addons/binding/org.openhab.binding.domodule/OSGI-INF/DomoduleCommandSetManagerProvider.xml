@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2014-2015 openHAB UG (haftungsbeschraenkt) and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+-->
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="binding.domodule.provider.domodulecommandsetmanagerprovider">
+
+   <implementation class="org.openhab.binding.domodule.internal.providers.DomoduleCommandSetManagerProviderImpl"/>
+
+   <service>
+      <provide interface="org.openhab.binding.domodule.api.DomoduleCommandSetManagerProvider"/>
+   </service>
+   
+   <reference name="commandSetDefinitionProvider" interface="org.openhab.binding.domodule.api.DomoduleCommandSetProvider" cardinality="0..n" policy="dynamic" bind="bindDomoduleCommandSetProvider" unbind="unbindDomoduleCommandSetProvider" />
+
+</scr:component>

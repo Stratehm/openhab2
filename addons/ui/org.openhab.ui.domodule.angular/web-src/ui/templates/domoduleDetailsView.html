@@ -1,0 +1,34 @@
+<div>
+    <div class="row">
+        <label class="col-sm-4 control-label">Id</label>
+        <div class="col-sm-8">{{domodule.id}}</div>
+    </div>
+    <div class="row">
+        <label class="col-sm-4 control-label">Name</label>
+        <div class="col-sm-8">{{domodule.name}}</div>
+    </div>
+    <div class="row">
+        <label class="col-sm-4 control-label">Model</label>
+        <div class="col-sm-8">{{domodule.model}}</div>
+    </div>
+    <div class="row">
+        <label class="col-sm-4 control-label">Description</label>
+        <div class="col-sm-8">{{domodule.description}}</div>
+    </div>
+    <div class="row">
+        <label class="col-sm-4 control-label">Firmware ID</label>
+        <div class="col-sm-8">{{domodule.firmwareId}}</div>
+    </div>
+    <div class="row">
+        <label class="col-sm-4 control-label">Firmware Version</label>
+        <div class="col-sm-8">{{domodule.firmwareVersion}}</div>
+    </div>
+    <div class="row">
+        <label class="col-sm-4 control-label">Firmware Name</label>
+        <div class="col-sm-8">{{domodule.firmwareName}}</div>
+    </div>
+    <div class="row" ng-repeat="(key, value) in domodule.metadata">
+        <label class="col-sm-4 control-label">{{key}}</label>
+        <div class="col-sm-8">{{value}}</div>
+    </div>
+</div>

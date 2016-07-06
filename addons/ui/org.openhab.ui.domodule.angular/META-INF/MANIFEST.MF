@@ -1,0 +1,36 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Domodule REST client
+Bundle-SymbolicName: org.openhab.ui.domodule.angular;singleton:=true
+Bundle-Version: 2.0.0.qualifier
+Bundle-Vendor: openHAB
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Import-Package: 
+ org.eclipse.smarthome.config.core,
+ org.eclipse.smarthome.core.common.registry,
+ org.eclipse.smarthome.core.events,
+ org.eclipse.smarthome.core.items,
+ org.eclipse.smarthome.core.items.events,
+ org.eclipse.smarthome.core.library.items,
+ org.eclipse.smarthome.core.library.types,
+ org.eclipse.smarthome.core.persistence,
+ org.eclipse.smarthome.core.types,
+ org.eclipse.smarthome.io.rest,
+ org.eclipse.smarthome.model.sitemap,
+ org.eclipse.smarthome.ui.icon,
+ org.eclipse.smarthome.ui.items,
+ org.glassfish.hk2.utilities.binding,
+ org.glassfish.jersey.internal.inject,
+ org.glassfish.jersey.media.sse,
+ org.glassfish.jersey.server,
+ org.glassfish.jersey.servlet.spi,
+ org.openhab.binding.domodule,
+ org.openhab.binding.domodule.api,
+ org.openhab.ui.dashboard,
+ org.osgi.framework,
+ org.osgi.service.cm,
+ org.osgi.service.component;version="1.2.2",
+ org.osgi.service.http,
+ org.slf4j
+Service-Component: OSGI-INF/*.xml
+Bundle-ClassPath: .

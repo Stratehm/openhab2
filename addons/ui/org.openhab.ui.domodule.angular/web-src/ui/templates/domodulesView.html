@@ -1,0 +1,44 @@
+<div ng-controller="DomodulesController">
+	<div class="panel panel-default">
+    	<div class="panel-heading">
+    		<h3 class="panel-title">Domodules</h3>
+        </div>
+        <div class="panel-body">
+		    <div class="row">
+		        <div class="col-lg-6 col-md-8 col-sm-10 col-xs-12">
+		            <div class="list-group domodules-list">
+		                <div class="list-group-item" ng-repeat="domodule in domodules" ng-class="{active: isSelected = isDomoduleSelected(domodule)}"
+		                	ng-click="toggleDomoduleSelection(domodule, !isSelected)">
+		                    <h4 class="domoduleName"><span>{{domodule.name}}</span>&nbsp;-&nbsp;{{domodule.id}}</h4>
+		                    <span class="glyphicon glyphicon-question-sign pull-right margin-glyphicon" uib-popover-template="'ui/templates/domoduleDetailsView.html'" popover-append-to-body="true" popover-trigger="mouseenter" popover-popup-delay="200" popover-placement="left"></span>
+		                    <span class="glyphicon glyphicon-ok pull-right margin-glyphicon" ng-show="isSelected"></span>
+		                </div>
+		            </div>
+		            <div>
+		            	Selected domodules: {{request.domodules.length}}
+		            </div>
+		        </div>
+		        <div class="col-xs-2">
+		    		<div class="row">
+			        	<a class="btn btn-default" ng-click="discover()">
+		                    <i class="icon-black glyphicon glyphicon-search"></i>
+		                    <span>Discover</span>
+		                </a>
+		        	</div>
+		        	<div class="row margin-top-05">
+		        		<a class="btn btn-default" ng-click="selectAll()">
+		                    <i class="icon-black glyphicon glyphicon-ok"></i>
+		                    <span ng-click="selectAll()">Select All</span>
+		                </a>
+		        	</div>
+		        	<div class="row margin-top-05">
+		        		<a class="btn btn-default" ng-click="unselectAll()">
+		                    <i class="icon-black glyphicon glyphicon-remove"></i>
+		                    <span>Unselect All</span>
+		                </a>
+		        	</div>
+		        </div>
+		    </div>
+		</div>
+    </div>
+</div>

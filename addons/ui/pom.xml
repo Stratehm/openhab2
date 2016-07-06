@@ -18,7 +18,8 @@
   <modules>
     <module>org.openhab.ui.cometvisu</module>
     <module>org.openhab.ui.cometvisu.php</module>
-	<module>org.openhab.ui.domodule</module>
+    <module>org.openhab.ui.domodule</module>
+    <module>org.openhab.ui.domodule.angular</module>
   </modules>
 
 </project>

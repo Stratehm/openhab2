@@ -1,0 +1,58 @@
+<div ng-controller="RequestBuilderController">
+	<div class="panel panel-default">
+    	<div class="panel-heading">
+    		<h3 class="panel-title">Request</h3>
+        </div>
+        <div class="panel-body">
+        	<div class="row">
+        		<div class="col-md-6">
+					<div class="panel panel-default">
+				    	<div class="panel-heading">
+				    		<h3 class="panel-title">Command</h3>
+				        </div>
+				        <div class="panel-body">
+						    <div class="row">
+						        <div class="col-xs-12">
+						            <div class="list-group commandList">
+						            	<div ng-repeat="commandSet in commandSets | orderBy: 'id'">
+							            	<h4 class="commandSetName"><span>{{commandSet.name}}</span>&nbsp;-&nbsp;{{commandSet.id}}</h4>
+							                <div class="list-group-item commandItem" ng-repeat="command in commandSet.commands | orderBy : 'id'" ng-if="command.type === 'REQUEST'" ng-class="{active: request.command === command}"
+							                	ng-click="commandSelected(commandSet, command)">
+							                    <h5 class="commandName"><span>{{command.name}}</span>&nbsp;-&nbsp;{{command.id}}</h5>
+							                    <span class="glyphicon glyphicon-ok pull-right margin-glyphicon" ng-show="request.command === command"></span>
+							                </div>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+				    </div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-default">
+				    	<div class="panel-heading">
+				    		<h3 class="panel-title">Parameters</h3>
+				        </div>
+				        <div class="panel-body">
+				        	<div class="row">
+						        <div class="col-xs-12">
+						            <div class="list-group parameterList">
+						            	<div class="list-group-item form-group row" ng-class="{active: parameter.isSelected}" ng-repeat="parameter in request.command.parameters | orderBy : 'id'">
+						            		<div class="col-sm-1 margin-top-05px">
+							                	<checkbox class="form-control-label" name="{{parameter.name}}" ng-class="{'btn-primary': parameter.isSelected}" ng-model="parameter.isSelected"></checkbox>
+							                </div>
+							                <label class="col-sm-4 form-control-label margin-top-05px">{{parameter.name}}</label>
+							                <div class="col-sm-7">
+							                	<input type="text" class="form-control" ng-model="parameter.value">
+							                </div>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+				    </div>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>

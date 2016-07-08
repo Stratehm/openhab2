@@ -1,0 +1,19 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Disable a domodule model</h3>
+    </div>
+    <div class="modal-body">
+        <form name="domoduleModelForm">
+            <div class="form-group" ng-class="{'has-error' : domoduleModelForm.domoduleModel.$invalid}">
+                <label>Domodule Model</label> 
+                <input type="text" name="domoduleModel" ng-model='domoduleModel' class="form-control" ng-pattern="/^[a-zA-Z0-9\-\._ ]{0,16}$/" required already-defined-disabled-domodule-model-validator>
+                <p class="help-block" ng-show="!domoduleModelForm.domoduleModel.$error.alreadyDefinedDomoduleModelValidator">Up to 16 alpha-numeric characters (-._ and spaces are allowed)</p>
+                <p class="help-block" ng-show="domoduleModelForm.domoduleModel.$error.alreadyDefinedDomoduleModelValidator">Domodule model already disabled.</p>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-disabled="domoduleModelForm.$invalid" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</div>

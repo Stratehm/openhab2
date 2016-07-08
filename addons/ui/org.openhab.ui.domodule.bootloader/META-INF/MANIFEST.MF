@@ -6,14 +6,17 @@ Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: openHAB
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: 
- com.fasterxml.jackson.core;version="2.4.5",
- com.fasterxml.jackson.databind;version="2.4.5",
+ com.fasterxml.jackson.annotation,
+ com.fasterxml.jackson.core,
+ com.fasterxml.jackson.databind,
+ com.google.common.collect,
  javax.ws.rs,
  javax.ws.rs.core,
  net.engio.mbassy.bus,
  net.engio.mbassy.listener,
  org.apache.commons.codec,
  org.apache.commons.codec.binary,
+ org.apache.commons.io;version="2.2.0",
  org.eclipse.smarthome.config.core,
  org.eclipse.smarthome.core.common.registry,
  org.eclipse.smarthome.core.events,
@@ -29,7 +32,7 @@ Import-Package:
  org.eclipse.smarthome.ui.items,
  org.glassfish.hk2.utilities.binding,
  org.glassfish.jersey.internal.inject,
- org.glassfish.jersey.media.multipart;version="2.22.1",
+ org.glassfish.jersey.media.multipart,
  org.glassfish.jersey.media.sse,
  org.glassfish.jersey.server,
  org.glassfish.jersey.servlet.spi,
@@ -67,7 +70,16 @@ Import-Package:
  strat.domo.domodule.bootloader.api.firmware.selector.rule,
  strat.domo.domodule.bootloader.api.firmware.utils,
  strat.domo.domodule.bootloader.api.model,
- strat.domo.domodule.bootloader.api.util
+ strat.domo.domodule.bootloader.api.util,
+ strat.domo.domodule.bootloader.impl,
+ strat.domo.domodule.bootloader.impl.config.rule,
+ strat.domo.domodule.bootloader.impl.firmware.json,
+ strat.domo.domodule.bootloader.impl.firmware.registry,
+ strat.domo.domodule.bootloader.impl.firmware.selector,
+ strat.domo.domodule.bootloader.impl.firmware.selector.rule,
+ strat.domo.domodule.bootloader.impl.firmware.zip
 Service-Component: OSGI-INF/*.xml
 Bundle-ClassPath: .,
- lib/domodule-bootloader-server-rest-1.0.0-SNAPSHOT.jar
+ lib/domodule-bootloader-server-rest-1.0.0-SNAPSHOT.jar,
+ lib/commons-collections4-4.1.jar,
+ lib/commons-lang3-3.4.jar

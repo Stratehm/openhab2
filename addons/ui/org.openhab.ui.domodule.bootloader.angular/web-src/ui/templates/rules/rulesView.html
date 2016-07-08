@@ -1,0 +1,57 @@
+<div ng-controller="RulesController">
+
+    <div id="firmwareView" class="container">
+        <div class="panel panel-default row">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title pull-left">Rules: {{rules.length}}</h3>
+                <a class="btn btn-default pull-right" ng-click="openCreateRuleModal($event)">
+                    <i class="icon-black glyphicon glyphicon-plus"></i>
+                    <span>Create</span>
+                </a>
+            </div>
+            <div class="panel-body">
+                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <uib-accordion close-others="false"> 
+                                <div dnd-list="[]" dnd-effect-allowed="move" dnd-drop="onDropped(event, index)">
+                                    <uib-accordion-group dnd-draggable="rule" dnd-dragstart="onDragStart(event, rule)" ng-repeat="rule in rules" is-open="viewState['ruleOpenedStatus' + rule.id].open" class="{{rule.enabled ? 'panel-success' : 'panel-warning'}}" ng-switch="rule.ruleType"> 
+                                        <uib-accordion-heading>
+                                            <div class="draggable-marker-wrapper" uib-tooltip="Move the rule.">
+                                                <span class="draggable-marker-component glyphicon glyphicon-option-vertical"></span>
+                                                <span class="draggable-marker-component glyphicon glyphicon-option-vertical"></span>
+                                            </div>
+                                            <span dnd-nodrag class="ruleNameHeader">{{rule.name}}</span><span dnd-nodrag>(Id: {{rule.id}}, Type: {{rule.ruleType}})</span>
+                                            <span dnd-nodrag class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': viewState['ruleOpenedStatus' + rule.id].open, 'glyphicon-chevron-right': !viewState['ruleOpenedStatus' + rule.id].open}"></span>
+                                            <span dnd-nodrag ng-click="deleteRule($event, rule)" class="pull-right glyphicon glyphicon-remove action-glyphicon" uib-tooltip="Delete the rule."></span>
+                                            <span dnd-nodrag ng-click="openEditRuleModal($event, rule)" class="pull-right glyphicon glyphicon-pencil action-glyphicon" uib-tooltip="Edit the rule."></span>
+                                            <span dnd-nodrag ng-click="setRuleEnabled($event, !rule.enabled, rule)" class="pull-right glyphicon glyphicon-ban-circle action-glyphicon" uib-tooltip="{{rule.enabled ? 'Disable the rule.' : 'Enable the rule.'}}"></span>
+                                        </uib-accordion-heading>
+                                        <div dnd-nodrag ng-switch-when="domoduleIdMatchingRule">
+                                            <ng-include src="'ui/templates/rules/domoduleIdMatchingRule.html'"></ng-include>
+                                        </div>
+                                        <div dnd-nodrag ng-switch-when="domoduleModelMatchingRule">
+                                            <ng-include src="'ui/templates/rules/domoduleModelMatchingRule.html'"></ng-include>
+                                        </div>
+                                        <div dnd-nodrag ng-switch-when="invalidFirmwareIdRule">
+                                            <ng-include src="'ui/templates/rules/invalidFirmwareIdRule.html'"></ng-include>
+                                        </div>
+                                        <div dnd-nodrag ng-switch-when="mandatoryMetaDataFieldsRule">
+                                            <ng-include src="'ui/templates/rules/mandatoryMetaDataFieldsRule.html'"></ng-include>
+                                        </div>
+                                        <div dnd-nodrag ng-switch-when="validFirmwareIdRule">
+                                            <ng-include src="'ui/templates/rules/validFirmwareIdRule.html'"></ng-include>
+                                        </div>
+                                        <div dnd-nodrag ng-switch-default>This type of rule is not manageable through the GUI.</div> 
+                                    </uib-accordion-group>
+                                    </div>
+                                </uib-accordion>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

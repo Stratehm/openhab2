@@ -1,0 +1,71 @@
+<div ng-controller="FirmwaresController">
+
+    <div id="firmwareView" class="container">
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="firmwareSearchQuery" class="col-sm-1 control-label" >Search:</label>
+                    <div class="col-sm-11">
+                        <input id="firmwareSearchQuery" class="form-control" type="text" ng-model="searchQuery" placeholder="Name, Id, Version, Models..." />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default row">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title pull-left">Displayed firmwares: {{(filteredFirmwares = (firmwares | filter:searchQuery)).length}}</h3>
+                <a class="btn btn-default pull-right" ng-click="openCreateFirmwareModal($event)">
+                    <i class="icon-black glyphicon glyphicon-plus"></i>
+                    <span>Create</span>
+                </a>
+            </div>
+            <div class="panel-body">
+                 <div class="row">
+                    <div class="col-md-12">
+                        <uib-accordion close-others="false"> 
+                            <uib-accordion-group ng-repeat="(groupFirmwareIdHex, groupFirmwares) in filteredFirmwares | orderBy: 'firmwareVersion' : true | groupBy: 'firmwareIdHex'" is-open="viewState[groupStatusId = 'groupOpenedStatus' + groupFirmwareIdHex].open"> 
+                                <uib-accordion-heading>
+                                    <span class="firmwareNameHeader">{{groupFirmwares[0].firmwareName}}</span> (Id: {{groupFirmwareIdHex}}, Versions: {{groupFirmwares.length}})
+                                    <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': viewState[groupStatusId].open, 'glyphicon-chevron-right': !viewState[groupStatusId].open}"></span>
+                                    <span ng-click="deleteFirmwareGroup($event, groupFirmwares[0].firmwareIdHex)" class="pull-right glyphicon glyphicon-remove action-glyphicon" uib-tooltip="Delete the firmware."></span>
+                                    <span ng-click="openEditFirmwareGroupModal($event, groupFirmwares[0].firmwareIdHex)" class="pull-right glyphicon glyphicon-pencil action-glyphicon" uib-tooltip="Edit the firmware."></span>
+                                    <span ng-click="openCreateFirmwareVersionModal($event, groupFirmwares[0].firmwareIdHex)" class="pull-right glyphicon glyphicon-open action-glyphicon" uib-tooltip="New firmware version."></span>
+                                </uib-accordion-heading>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <uib-accordion close-others="false"> 
+                                            <uib-accordion-group ng-repeat="firmware in groupFirmwares | orderBy: 'firmwareVersion' : true" is-open="viewState[statusId = 'firmwareOpenedStatus' + firmware.firmwareIdHex + firmware.firmwareVersion].open"> 
+                                                <uib-accordion-heading>
+                                                    <span class="firmwareNameHeader">Version {{firmware.firmwareVersion}}</span>
+                                                    <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': viewState[statusId].open, 'glyphicon-chevron-right': !viewState[statusId].open}"></span>
+                                                    <span ng-click="deleteFirmware($event, firmware)" class="pull-right glyphicon glyphicon-remove action-glyphicon" uib-tooltip="Delete the firmware."></span>
+                                                    <span ng-click="openEditFirmwareModal($event, firmware)" class="pull-right glyphicon glyphicon-pencil action-glyphicon" uib-tooltip="Edit the firmware."></span>
+                                                </uib-accordion-heading>
+                                                <div class="row">
+                                                    <label class="col-md-3 control-label">Name</label>
+                                                    <div class="col-md-9">{{firmware.firmwareName}}</div>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-md-3 control-label">Description</label>
+                                                    <div class="col-md-9">{{firmware.firmwareDescription}}</div>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-md-3 control-label">Compatible Models</label>
+                                                    <div class="col-md-9">{{firmware.firmwareCompatibleModels && firmware.firmwareCompatibleModels.length > 0 ? firmware.firmwareCompatibleModels.join(',') : 'All'}}</div>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-md-3 control-label">File path</label>
+                                                    <div class="col-md-9">{{firmware.firmwareFilePath ? firmware.firmwareFilePath : 'None'}}</div>
+                                                </div>
+                                            </uib-accordion-group>
+                                        </uib-accordion>
+                                    </div>
+                                </div>
+                            </uib-accordion-group>
+                        </uib-accordion>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

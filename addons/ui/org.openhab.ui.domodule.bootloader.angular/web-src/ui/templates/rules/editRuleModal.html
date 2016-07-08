@@ -1,0 +1,21 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Edit rule</h3>
+    </div>
+    <div class="modal-body">
+        <form name="ruleForm">
+            <div class="form-group">
+                <label>Rule ID</label> 
+                <input type="number" name="id" ng-model='rule.id' class="form-control" disabled>
+            </div>
+            <div class="form-group" ng-class="{'has-error' : ruleForm.name.$invalid}">
+                <label>Rule Name</label>
+                <input type="text" name="name" ng-model='rule.name' class="form-control" required>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-disabled="ruleForm.$invalid" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</div>

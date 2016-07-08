@@ -21,6 +21,7 @@
     <module>org.openhab.ui.domodule</module>
     <module>org.openhab.ui.domodule.angular</module>
     <module>org.openhab.ui.domodule.bootloader</module>
+	<module>org.openhab.ui.domodule.bootloader.angular</module>
   </modules>
 
 </project>

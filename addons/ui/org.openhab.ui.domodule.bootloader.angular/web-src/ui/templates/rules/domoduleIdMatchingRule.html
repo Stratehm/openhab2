@@ -1,0 +1,79 @@
+<div ng-controller="DomoduleIdMatchingRuleController">
+    <div class="row">
+        <label class="col-md-2 control-label">Description</label>
+        <div class="col-md-10" ng-bind-html="rulesDescriptions.domoduleIdMatchingRule | asSafeHtml"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <uib-accordion close-others="false"> 
+                <uib-accordion-group is-open="viewState['disabledDomoduleIdsOpenedStatus' + rule.id].open"> 
+                    <uib-accordion-heading>
+                        <span class="disabledDomoduleIdHeader">Disabled domodule IDs</span> (Count: {{rule.disabledDomoduleIds.length}})
+                        <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': viewState['disabledDomoduleIdsOpenedStatus' + rule.id].open, 'glyphicon-chevron-right': !viewState['disabledDomoduleIdsOpenedStatus' + rule.id].open}"></span>
+                    </uib-accordion-heading>
+                    <div class="row">
+                        <div class="col-md-10 col-lg-11 disabled-domodule-id-list">
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="disabledDomoduleId in rule.disabledDomoduleIds">{{disabledDomoduleId}} <span ng-click="deleteDisabledDomoduleId($event, rule, disabledDomoduleId)" class="pull-right glyphicon glyphicon-remove action-glyphicon" uib-tooltip="Remove the disabled domodule ID."></span></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-2 col-lg-1">
+                            <a class="btn btn-default" ng-click="openAddDisabledDomoduleIdModal($event, rule)">
+                            <i class="icon-black glyphicon glyphicon-plus"></i>
+                           <span>Add</span>
+                           </a>
+                        </div>
+                    </div>
+                </uib-accordion-group>
+                <uib-accordion-group is-open="viewState['domoduleIdsRulesOpenedStatus' + rule.id].open"> 
+                    <uib-accordion-heading>
+                        <span class="disabledDomoduleIdHeader">Domodule ID rules</span> (Count: {{rule.rules.length}})
+                        <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': viewState['domoduleIdsRulesOpenedStatus' + rule.id].open, 'glyphicon-chevron-right': !viewState['domoduleIdsRulesOpenedStatus' + rule.id].open}"></span>
+                    </uib-accordion-heading>
+                    <div class="row">
+                        <div class="col-md-10 col-lg-11 domodule-id-rules-list">
+                            <div class="list-group" ng-repeat="domoduleIdRule in rule.rules">
+                                <h4 class="list-group-item-heading">Domodule ID: {{domoduleIdRule.domoduleId}}
+                                    <span ng-click="deleteDomoduleIdRule($event, rule, domoduleIdRule)" class="action-glyphicon pull-right glyphicon glyphicon-remove action-glyphicon" uib-tooltip="Delete the domodule ID rule."></span>
+                                    <span ng-click="openEditDomoduleIdRuleModal($event, rule, domoduleIdRule)" class="action-glyphicon pull-right glyphicon glyphicon-pencil action-glyphicon" uib-tooltip="Edit the domodule ID rule."></span>
+                                </h4>
+                                <div class="row">
+                                    <label class="col-md-3 control-label">Firmware Id</label>
+                                    <div class="col-md-9">{{domoduleIdRule.firmwareIdHex}}</div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-md-3 control-label">Firmware Version</label>
+                                    <div class="col-md-9">{{domoduleIdRule.firmwareVersion ? domoduleIdRule.firmwareVersion : 'Latest'}}</div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-md-3 control-label">Force Compatibility</label>
+                                    <div class="col-md-9">
+                                        <div class="checkbox" style="margin: 0px;" ng-class="{'checkbox-warning' : domoduleIdRule.forceCompatibility }">
+                                            <input type="checkbox" ng-model="domoduleIdRule.forceCompatibility" disabled>
+                                            <label></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-md-3 control-label">Force Update</label>
+                                    <div class="col-md-9">
+                                        <div class="checkbox" style="margin: 0px;" ng-class="{'checkbox-warning' : domoduleIdRule.forceUpdate }">
+                                            <input type="checkbox" ng-model="domoduleIdRule.forceUpdate" disabled>
+                                            <label></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-lg-1">
+                            <a class="btn btn-default" ng-click="openCreateDomoduleIdRuleModal($event, rule)">
+                            <i class="icon-black glyphicon glyphicon-plus"></i>
+                           <span>Add</span>
+                           </a>
+                        </div>
+                    </div>
+                </uib-accordion-group>
+            </uib-accordion>
+        </div>
+    </div>
+</div>

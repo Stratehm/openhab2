@@ -11,7 +11,7 @@ package org.openhab.ui.domodule.internal;
 import org.openhab.ui.dashboard.DashboardTile;
 
 /**
- * The dashboard tile for the Paper UI
+ * The dashboard tile for the Domodule UI
  *
  * @author Kai Kreuzer
  *

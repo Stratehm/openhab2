@@ -1,0 +1,36 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Create rule</h3>
+    </div>
+    <div class="modal-body">
+        <form name="ruleForm">
+            <div class="form-group" ng-class="{'has-error' : ruleForm.id.$invalid}">
+                <label>Rule ID</label> 
+                <input type="number" name="id" ng-model='rule.id' class="form-control" min="0" max="2147483647" already-defined-rule-id-validator>
+                <p class="help-block" ng-show="ruleForm.id.$error.alreadyDefinedRuleIdValidator">Rule ID already exists.</p>
+            </div>
+            <div class="form-group" ng-class="{'has-error' : ruleForm.name.$invalid}">
+                <label>Rule Name</label>
+                <input type="text" name="name" ng-model='rule.name' class="form-control" required>
+            </div>
+            <div class="form-group" ng-class="{'has-error' : ruleForm.ruleType.$invalid}">
+                <label>Rule Type</label>
+                <select class="form-control" id="ruleType" ng-model="rule.ruleType" ng-init="rule.ruleType = 'mandatoryMetaDataFieldsRule'">
+                    <option value="mandatoryMetaDataFieldsRule">Mandatory Metadata Fields</option>
+                    <option value="domoduleIdMatchingRule">Domodule ID Matching</option>
+                    <option value="domoduleModelMatchingRule">Domodule Model Matching</option>
+                    <option value="invalidFirmwareIdRule">Invalid Firmware ID</option>
+                    <option value="validFirmwareIdRule">Valid Firmware ID</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <p class="form-control-static" ng-bind-html="rulesDescriptions[rule.ruleType] | asSafeHtml"></p>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-disabled="ruleForm.$invalid" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</div>

@@ -38,11 +38,19 @@ public class FirmwareRegistryProviderImpl implements FirmwareRegistryProvider {
     }
 
     public void bindFirmwareProviderProvider(FirmwareProviderProvider provider) {
-        firmwareProviders.add(provider.getFirmwareProvider());
+        if (instance == null) {
+            firmwareProviders.add(provider.getFirmwareProvider());
+        } else {
+            instance.addFirmwareProvider(provider.getFirmwareProvider());
+        }
     }
 
     public void unbindFirmwareProviderProvider(FirmwareProviderProvider provider) {
-        firmwareProviders.remove(provider.getFirmwareProvider());
+        if (instance == null) {
+            firmwareProviders.remove(provider.getFirmwareProvider());
+        } else {
+            instance.removeFirmwareProvider(provider.getFirmwareProvider());
+        }
     }
 
 }

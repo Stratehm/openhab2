@@ -1,0 +1,26 @@
+<div>
+    <div class="row">
+        <label class="col-md-3 control-label">Id</label>
+        <div class="col-md-9">{{firmware.firmwareIdHex}}</div>
+    </div>
+    <div class="row">
+        <label class="col-md-3 control-label">Name</label>
+        <div class="col-md-9">{{firmware.firmwareName}}</div>
+    </div>
+    <div class="row">
+        <label class="col-md-3 control-label">Version</label>
+        <div class="col-md-9">{{firmware.firmwareVersion}}</div>
+    </div>
+    <div class="row">
+        <label class="col-md-3 control-label">Description</label>
+        <div class="col-md-9">{{firmware.firmwareDescription}}</div>
+    </div>
+    <div class="row">
+        <label class="col-md-3 control-label">Compatible Models</label>
+        <div class="col-md-9">{{firmware.firmwareCompatibleModels && firmware.firmwareCompatibleModels.length > 0 ? firmware.firmwareCompatibleModels.join(',') : 'All'}}</div>
+    </div>
+    <div class="row">
+        <label class="col-md-3 control-label">File path</label>
+        <div class="col-md-9">{{firmware.firmwareFilePath ? firmware.firmwareFilePath : 'None'}}</div>
+    </div>
+</div>

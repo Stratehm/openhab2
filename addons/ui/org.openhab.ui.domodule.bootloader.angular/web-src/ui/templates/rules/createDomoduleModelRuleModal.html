@@ -1,0 +1,60 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Create domodule Model rule</h3>
+    </div>
+    <div class="modal-body">
+        <form name="ruleForm">
+            <div class="form-group" ng-class="{'has-error' : ruleForm.domoduleModel.$invalid}">
+                <label>Domodule Model</label> 
+                <input type="text" name="domoduleModel" ng-model='domoduleModelRule.domoduleModel' class="form-control" required ng-pattern="/^([a-zA-Z0-9\-\._ ]{1,16})$/" already-defined-domodule-model-rule-validator>
+                <p class="help-block" ng-show="!ruleForm.domoduleModel.$error.alreadyDefinedDomoduleModelRuleValidator">Up to 16 alpha-numeric characters (-._ and spaces are allowed).</p>
+                <p class="help-block" ng-show="ruleForm.domoduleModel.$error.alreadyDefinedDomoduleModelRuleValidator">Domodule Model rule already defined.</p>
+            </div>
+            <div class="form-group" ng-class="{'has-error' : !domoduleModelRule.firmwareIdHex}">
+                <label>Firmware</label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="list-group domodule-model-rule-firmwares-list">
+                            <div class="list-group-item" ng-repeat="(groupFirmwareIdHex, groupFirmwares) in firmwares | orderBy: 'firmwareVersion' : true | groupBy: 'firmwareIdHex'">
+                                <h4><span class="domodule-id-rule-firmware-name">{{groupFirmwares[0].firmwareName}}</span>&nbsp;(Id: {{groupFirmwareIdHex}})</h4>
+                                <div class="list-group">
+                                    <div class="list-group-item" ng-class="{active: latestVersionActive = domoduleModelRule.firmwareIdHex == groupFirmwareIdHex && domoduleModelRule.firmwareVersion == null}" 
+                                        ng-click="domoduleModelRule.firmwareIdHex = groupFirmwareIdHex; domoduleModelRule.firmwareVersion = null" ng-init="firmware = groupFirmwares[0]">
+                                        <h6 class="firmwareVersion">Latest version</h6>
+                                        <span class="glyphicon glyphicon-question-sign pull-right margin-glyphicon" uib-popover-template="'ui/templates/firmwares/firmwareDetailsPopover.html'" popover-trigger="mouseenter" popover-popup-delay="200" popover-placement="left"></span>
+                                        <span class="glyphicon glyphicon-ok pull-right margin-glyphicon"  ng-show="latestVersionActive"></span>
+                                    </div>
+                                    <div class="list-group-item" ng-repeat="firmware in groupFirmwares" ng-class="{active: currentVersionActive = domoduleModelRule.firmwareIdHex == groupFirmwareIdHex && domoduleModelRule.firmwareVersion == firmware.firmwareVersion }" 
+                                        ng-click="domoduleModelRule.firmwareIdHex = groupFirmwareIdHex; domoduleModelRule.firmwareVersion = firmware.firmwareVersion">
+                                        <h6 class="firmwareVersion">Version {{firmware.firmwareVersion}}</h6>
+                                        <span class="glyphicon glyphicon-question-sign pull-right margin-glyphicon" uib-popover-template="'ui/templates/firmwares/firmwareDetailsPopover.html'" popover-trigger="mouseenter" popover-popup-delay="200" popover-placement="left"></span>
+                                        <span class="glyphicon glyphicon-ok pull-right margin-glyphicon" ng-show="currentVersionActive"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <p class="help-block" ng-show="!domoduleModelRule.firmwareIdHex">Select a firmware version.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Force Compatibility</label>
+                <div class="checkbox" style="margin: 0px;">
+                    <input type="checkbox" name="forceCompatibility" ng-model="domoduleModelRule.forceCompatibility">
+                    <label></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Force Update</label>
+                <div class="checkbox" style="margin: 0px;">
+                    <input type="checkbox" name="forceUpdate" ng-model="domoduleModelRule.forceUpdate">
+                    <label></label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-disabled="ruleForm.$invalid || !domoduleModelRule.firmwareIdHex" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</div>

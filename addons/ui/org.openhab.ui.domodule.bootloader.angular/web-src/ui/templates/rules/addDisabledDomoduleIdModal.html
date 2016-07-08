@@ -1,0 +1,19 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Disable a domodule ID</h3>
+    </div>
+    <div class="modal-body">
+        <form name="domoduleIdForm">
+            <div class="form-group" ng-class="{'has-error' : domoduleIdForm.domoduleId.$invalid}">
+                <label>Domodule ID</label> 
+                <input type="text" name="domoduleId" ng-model='domoduleId' class="form-control" ng-pattern="/^[a-fA-F0-9]{12}$/" required already-defined-disabled-domodule-id-validator>
+                <p class="help-block" ng-show="!domoduleIdForm.domoduleId.$error.alreadyDefinedDomoduleIdValidator">Strictly 12 Hexa-decimal characters.</p>
+                <p class="help-block" ng-show="domoduleIdForm.domoduleId.$error.alreadyDefinedDomoduleIdValidator">Domodule ID already disabled.</p>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-disabled="domoduleIdForm.$invalid" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</div>

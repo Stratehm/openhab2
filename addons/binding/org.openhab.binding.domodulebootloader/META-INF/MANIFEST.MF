@@ -10,8 +10,9 @@ Bundle-ClassPath: .,
  lib/commons-lang3-3.4.jar,
  lib/domodule-bootloader-command-protocol-1.0.0-SNAPSHOT.jar
 Import-Package: 
- org.openhab.binding.domodulebootloader,
+ org.apache.commons.io,
  org.eclipse.smarthome.config.core,
+ org.openhab.binding.domodulebootloader,
  org.slf4j
 Service-Component: OSGI-INF/*.xml
 Export-Package: org.openhab.binding.domodulebootloader,
@@ -26,5 +27,12 @@ Export-Package: org.openhab.binding.domodulebootloader,
  strat.domo.domodule.bootloader.api.firmware.selector.rule,
  strat.domo.domodule.bootloader.api.firmware.utils,
  strat.domo.domodule.bootloader.api.model,
- strat.domo.domodule.bootloader.api.util
+ strat.domo.domodule.bootloader.api.util,
+ strat.domo.domodule.bootloader.impl,
+ strat.domo.domodule.bootloader.impl.config.rule,
+ strat.domo.domodule.bootloader.impl.firmware.json,
+ strat.domo.domodule.bootloader.impl.firmware.registry,
+ strat.domo.domodule.bootloader.impl.firmware.selector,
+ strat.domo.domodule.bootloader.impl.firmware.selector.rule,
+ strat.domo.domodule.bootloader.impl.firmware.zip
 Fragment-Host: org.openhab.binding.domodule

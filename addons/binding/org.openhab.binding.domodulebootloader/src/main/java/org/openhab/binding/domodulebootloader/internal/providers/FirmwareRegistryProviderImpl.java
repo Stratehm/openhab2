@@ -10,7 +10,7 @@ import com.google.common.collect.Sets;
 
 import strat.domo.domodule.bootloader.api.firmware.provider.FirmwareProvider;
 import strat.domo.domodule.bootloader.api.firmware.registry.FirmwareRegistry;
-import strat.domo.domodule.bootloader.api.firmware.registry.SimpleFirmwareRegistry;
+import strat.domo.domodule.bootloader.impl.firmware.registry.SimpleFirmwareRegistry;
 
 /**
  * Provides an instance of a SimpleFirmwareRegistry.

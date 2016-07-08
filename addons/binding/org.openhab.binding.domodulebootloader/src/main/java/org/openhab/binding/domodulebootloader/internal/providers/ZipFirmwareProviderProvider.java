@@ -7,7 +7,7 @@ import org.eclipse.smarthome.config.core.ConfigConstants;
 import org.openhab.binding.domodulebootloader.api.FirmwareProviderProvider;
 
 import strat.domo.domodule.bootloader.api.firmware.provider.FirmwareProvider;
-import strat.domo.domodule.bootloader.api.firmware.zip.ZipFileDirectoryWatcherFirmwareProvider;
+import strat.domo.domodule.bootloader.impl.firmware.zip.ZipFileDirectoryWatcherFirmwareProvider;
 
 /**
  * Provides an instance of a ZipFileDirectoryWatcherFirmwareProvider.

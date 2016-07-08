@@ -18,6 +18,7 @@ import strat.domo.domodule.bootloader.api.exception.RuleAlreadyExistsException;
 import strat.domo.domodule.bootloader.api.firmware.selector.RuledFirmwareSelector;
 import strat.domo.domodule.bootloader.api.firmware.selector.rule.RulesConfigurationManager;
 import strat.domo.domodule.bootloader.api.firmware.selector.rule.SelectionRule;
+import strat.domo.domodule.bootloader.impl.config.rule.DefaultRulesConfigurationManager;
 import strat.domo.domodule.bootloader.server.rest.dto.rule.RuleDto;
 import strat.domo.domodule.bootloader.server.rest.factory.RuleDtoFactory;
 
@@ -56,7 +57,22 @@ public class RulesConfigurationManagerJsonFile implements RulesConfigurationMana
         String userDataFolder = ConfigConstants.getUserDataFolder();
         configurationFile = new File(userDataFolder + "/domodule/bootloader/rules.json");
 
-        loadRules();
+        // If the rules file does not exist, load and save the default rules.
+        if (configurationFile == null || !configurationFile.exists()) {
+            // This configurationManager loads default rules.
+            new DefaultRulesConfigurationManager(ruledFirmwareSelector);
+            // Then save them in the configuration file if the directory exists or the directory creation succeeds
+            if (!configurationFile.getParentFile().exists()) {
+                if (configurationFile.getParentFile().mkdirs()) {
+                    saveRules();
+                }
+            } else {
+                saveRules();
+            }
+        } else {
+            loadRules();
+        }
+
     }
 
     @Override

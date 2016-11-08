@@ -8,17 +8,12 @@
  */
 package org.openhab.binding.pioneeravr.internal.handler;
 
-import java.util.Map;
-import java.util.Set;
-
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandlerFactory;
 import org.eclipse.smarthome.core.thing.binding.ThingHandler;
-import org.openhab.binding.pioneeravr.PioneerAvrBindingConstants;
-import org.osgi.service.component.ComponentContext;
-
-import com.google.common.collect.Sets;
+import org.openhab.binding.pioneeravr.internal.models.AbstractModel;
+import org.openhab.binding.pioneeravr.internal.thingtype.ThingTypeManager;
 
 /**
  * The {@link AvrHandlerFactory} is responsible for creating things and thing handlers.
@@ -27,32 +22,26 @@ import com.google.common.collect.Sets;
  */
 public class AvrHandlerFactory extends BaseThingHandlerFactory {
 
-    private static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Sets.newHashSet(
-            PioneerAvrBindingConstants.IP_AVR_THING_TYPE, PioneerAvrBindingConstants.IP_AVR_UNSUPPORTED_THING_TYPE,
-            PioneerAvrBindingConstants.SERIAL_AVR_THING_TYPE);
-
-    protected void activate(ComponentContext componentContext, Map<String, Object> configProps) {
-        super.activate(componentContext);
-
-    }
+    private ThingTypeManager thingTypeManager;
 
     @Override
     public boolean supportsThingType(ThingTypeUID thingTypeUID) {
-        return SUPPORTED_THING_TYPES_UIDS.contains(thingTypeUID);
+        return thingTypeManager.getRegisteredThingTypesUIDs().contains(thingTypeUID);
     }
 
     @Override
     protected ThingHandler createHandler(Thing thing) {
-
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
+        AbstractModel model = thingTypeManager.getModelFromThingType(thingTypeUID);
 
-        if (thingTypeUID.equals(PioneerAvrBindingConstants.IP_AVR_THING_TYPE)
-                || thingTypeUID.equals(PioneerAvrBindingConstants.IP_AVR_UNSUPPORTED_THING_TYPE)) {
-            return new IpAvrHandler(thing);
-        } else if (thingTypeUID.equals(PioneerAvrBindingConstants.SERIAL_AVR_THING_TYPE)) {
-            return new SerialAvrHandler(thing);
+        if (model != null) {
+            return new AvrHandler(thing, model.getModelProperties());
         }
 
         return null;
+    }
+
+    public void setModelManager(ThingTypeManager modelManager) {
+        this.thingTypeManager = modelManager;
     }
 }

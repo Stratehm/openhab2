@@ -9,8 +9,10 @@
 package org.openhab.binding.pioneeravr.internal.protocol;
 
 import org.apache.commons.lang.StringUtils;
+import org.openhab.binding.pioneeravr.internal.protocol.Response.ResponseType;
 import org.openhab.binding.pioneeravr.protocol.AvrCommand;
 import org.openhab.binding.pioneeravr.protocol.AvrConnectionException;
+import org.openhab.binding.pioneeravr.protocol.AvrResponse.RepsonseType;
 
 /**
  * A command which accept a parameter.
@@ -28,15 +30,18 @@ public class ParameterizedCommand extends SimpleCommand {
      */
     public enum ParameterizedCommandType implements AvrCommand.CommandType {
 
-        VOLUME_SET("[0-9]{2,3}", "VL", "ZV", "YV", "HZV"),
-        INPUT_CHANNEL_SET("[0-9]{2}", "FN", "ZS", "ZT", "ZEA");
+        VOLUME_SET(ResponseType.VOLUME_LEVEL, "[0-9]{2,3}", "VL", "ZV", "YV", "HZV"),
+        INPUT_CHANNEL_SET(ResponseType.INPUT_SOURCE_CHANNEL, "[0-9]{2}", "FN", "ZS", "ZT", "ZEA");
 
         private String[] zoneCommands;
         private String parameterPattern;
+        private ResponseType expectedResponse;
 
-        private ParameterizedCommandType(String parameterPattern, String... zoneCommands) {
+        private ParameterizedCommandType(ResponseType expectedResponse, String parameterPattern,
+                String... zoneCommands) {
             this.zoneCommands = zoneCommands;
             this.parameterPattern = parameterPattern;
+            this.expectedResponse = expectedResponse;
         }
 
         @Override
@@ -46,6 +51,11 @@ public class ParameterizedCommand extends SimpleCommand {
 
         public String getParameterPattern() {
             return parameterPattern;
+        }
+
+        @Override
+        public RepsonseType getExpectedResponse() {
+            return expectedResponse;
         }
     }
 

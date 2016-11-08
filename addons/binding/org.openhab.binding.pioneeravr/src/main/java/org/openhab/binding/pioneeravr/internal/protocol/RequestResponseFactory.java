@@ -9,8 +9,8 @@
 package org.openhab.binding.pioneeravr.internal.protocol;
 
 import org.openhab.binding.pioneeravr.internal.protocol.ParameterizedCommand.ParameterizedCommandType;
+import org.openhab.binding.pioneeravr.internal.protocol.Response.ResponseType;
 import org.openhab.binding.pioneeravr.internal.protocol.SimpleCommand.SimpleCommandType;
-import org.openhab.binding.pioneeravr.internal.protocol.ip.IpAvrConnection;
 
 /**
  * Factory that allows to build IpControl commands/responses.
@@ -19,17 +19,6 @@ import org.openhab.binding.pioneeravr.internal.protocol.ip.IpAvrConnection;
  *
  */
 public final class RequestResponseFactory {
-
-    /**
-     * Return a connection to the AVR with the given host and port.
-     *
-     * @param host
-     * @param port
-     * @return
-     */
-    public static IpAvrConnection getConnection(String host, Integer port) {
-        return new IpAvrConnection(host, port);
-    }
 
     /**
      * Return a ParameterizedCommand of the type given in parameter and for the given zone.
@@ -80,6 +69,18 @@ public final class RequestResponseFactory {
      */
     public static Response getIpControlResponse(String responseData) {
         return new Response(responseData);
+    }
+
+    /**
+     * Return a IpControlResponse object based on the given type, zone and parameter.
+     *
+     * @param responseType
+     * @param zone
+     * @param parameter
+     * @return
+     */
+    public static Response getIpControlResponse(ResponseType responseType, int zone, String parameter) {
+        return new Response(responseType, zone, parameter);
     }
 
 }

@@ -8,6 +8,8 @@
  */
 package org.openhab.binding.pioneeravr.protocol;
 
+import org.openhab.binding.pioneeravr.protocol.AvrResponse.RepsonseType;
+
 /**
  * The base interface for an AVR command.
  *
@@ -17,7 +19,7 @@ package org.openhab.binding.pioneeravr.protocol;
 public interface AvrCommand {
 
     /**
-     * Represent a CommandType of command requests
+     * Represent a CommandType of command requests.
      *
      * @author Antoine Besnard
      *
@@ -34,11 +36,18 @@ public interface AvrCommand {
         public String getCommand(int zone);
 
         /**
-         * Return the name of the command type
+         * Return the name of the command type.
          *
          * @return
          */
         public String name();
+
+        /**
+         * Return the expected response type to this request. May be null if no response is expected.
+         *
+         * @return
+         */
+        public RepsonseType getExpectedResponse();
     }
 
     /**
@@ -61,5 +70,12 @@ public interface AvrCommand {
      * @return
      */
     public CommandType getCommandType();
+
+    /**
+     * Return true if a response is expected for this command, else false.
+     * 
+     * @return
+     */
+    public boolean isResponseExpected();
 
 }

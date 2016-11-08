@@ -35,7 +35,6 @@ public class DisplayInformation {
      * @return
      */
     public DisplayInformation(String responsePayload) {
-
         volumeDisplay = false;
         guidIcon = false;
         infoText = "";

@@ -65,6 +65,13 @@ public interface AvrResponse {
          * @return
          */
         public String parseParameter(String responseData);
+
+        /**
+         * Return true if the response type is an error response.
+         * 
+         * @return
+         */
+        boolean isError();
     }
 
     /**
@@ -90,7 +97,7 @@ public interface AvrResponse {
 
     /**
      * Return the zone number which is concerned by this response.
-     * 
+     *
      * @return
      */
     public Integer getZone();

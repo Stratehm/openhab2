@@ -17,11 +17,11 @@ import java.util.EventListener;
  * @author Rainer Ostendorf
  * @author based on the Onkyo binding by Pauli Anttila and others
  */
-public interface AvrUpdateListener extends EventListener {
+public interface AvrNotificationListener extends EventListener {
 
     /**
      * Procedure for receive status update from Pioneer receiver.
      */
-    public void statusUpdateReceived(AvrStatusUpdateEvent event);
+    public void statusUpdateReceived(AvrNotificationEvent event);
 
 }
